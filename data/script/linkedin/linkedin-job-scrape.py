@@ -34,16 +34,16 @@ def scrape_linkedin_url(link):
         return None
 
 
-# Run the scraper for all the links in the software_intern_links file
-def scrape_software_interns():
-    software_intern_links = open("software_intern_links", "r").read().split("\n")
-    software_intern_data = json.load(open("software_intern_data.json", "r"))
+# Runs the scraper for all the links in the link_file
+# Stores the data into a json data_file
+def scrape_links_and_store_data(link_file, data_file):
+    software_intern_links = open(link_file, "r").read().split("\n")
+    software_intern_data = json.load(open(data_file, "r"))
     # Avoid duplicate data points by caching already scraped postings
     scraped_ids = {}
     for i in software_intern_data:
         if not isinstance(software_intern_data[i], str):
             scraped_ids[software_intern_data[i]['id']] = 0
-    print(scraped_ids)
     index = len(scraped_ids)
     for i in software_intern_links:
         # Check if posting is already in the data
@@ -53,8 +53,9 @@ def scrape_software_interns():
             if temp_data is not None:
                 software_intern_data[index] = scrape_linkedin_url(i)
                 index+=1
-    json.dump(software_intern_data, open("software_intern_data.json", "w"), indent=2)
+    json.dump(software_intern_data, open(data_file, "w"), indent=2)
+
 
 
 # Function to scrape software intern links
-scrape_software_interns()
+scrape_links_and_store_data("software_intern_links", "software_intern_data.json")
