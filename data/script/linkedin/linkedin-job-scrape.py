@@ -66,3 +66,6 @@ scrape_links_and_store_data("links/data_engineering_links.txt", "data/data_engin
 
 # Function to scrape Software Engineer links
 scrape_links_and_store_data("links/software_engineer_links.txt", "data/software_engineer_data.json")
+
+# Function to scrape DevOps links
+scrape_links_and_store_data("links/devops_links.txt", "data/devops_data.json")
