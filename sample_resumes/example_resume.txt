@@ -1,0 +1,43 @@
+ALEX CHEN
+Software Developer
+alex.chen@email.com | (555) 987-6543 | github.com/alexchen | linkedin.com/in/alexchen
+
+EDUCATION
+University of Computer Science
+B.S. in Computer Science, Minor in Mathematics, GPA: 3.7/4.0
+Expected Graduation: May 2024
+
+TECHNICAL SKILLS
+Languages: Java, Python, JavaScript, HTML, CSS
+Tools & Frameworks: Git, VS Code, Eclipse
+Concepts: Object-Oriented Programming, Data Structures, Algorithms
+
+PROJECTS
+E-commerce Website (Jan 2023 - Present)
+- Created a responsive website using HTML, CSS, and JavaScript
+- Implemented user authentication and shopping cart functionality
+- Designed database schema for product catalog
+
+Weather Data Visualization (Sep 2022 - Dec 2022)
+- Developed a Python application to analyze and visualize weather patterns
+- Used Pandas for data manipulation and Matplotlib for creating charts
+- Processed data from public weather APIs
+
+EXPERIENCE
+ABC Tech Solutions, IT Support Intern (Jun 2022 - Aug 2022)
+- Provided technical support to staff of 50+ employees
+- Troubleshot and resolved hardware and software issues
+- Assisted with setting up new workstations and peripherals
+
+Computer Science Department, Teaching Assistant (Jan 2022 - May 2022)
+- Assisted professor in Introduction to Programming course with 30 students
+- Held weekly office hours to help students with coding assignments
+- Graded homework and provided feedback on programming exercises
+
+EXTRACURRICULAR ACTIVITIES
+Coding Club, Member (2021 - Present)
+- Participate in weekly coding challenges and hackathons
+- Collaborate with peers on small-scale development projects
+
+Volunteer, Tech Literacy Program (2022)
+- Taught basic computer skills to senior citizens at local community center
