@@ -22,8 +22,10 @@ def scrape_linkedin_url(link):
         job_title = html_page.find("h3", class_=JOB_TITLE).text
         job_description = html_page.find("div", class_=JOB_DESCRIPTION).text.lstrip()
         job_location = html_page.find("span", class_=JOB_LOCATION).text
-
-        data["id"] = link.split("/")[-1]
+        id = link.split("/")[-1]
+        if id == "" and len(link.split("/"))>1:
+            id = link.split("/")[-2]
+        data["id"] = id
         data["Company"] = company_name
         data["title"] = job_title
         data["description"] = job_description
@@ -45,10 +47,13 @@ def scrape_links_and_store_data(link_file, data_file):
         if not isinstance(software_intern_data[i], str):
             scraped_ids[software_intern_data[i]['id']] = 0
     index = len(scraped_ids)
-    for i in software_intern_links:
+    for index, i in enumerate(software_intern_links):
         # Check if posting is already in the data
-        if i.split("/")[-1] not in scraped_ids:
-            print(i)
+        id = i.split("/")[-1]
+        if id == "" and len(i.split("/"))>1:
+            id = i.split("/")[-2]
+        if id not in scraped_ids:
+            print(i, index)
             temp_data = scrape_linkedin_url(i)
             if temp_data is not None:
                 software_intern_data[index] = scrape_linkedin_url(i)
@@ -69,3 +74,15 @@ scrape_links_and_store_data("links/software_engineer_links.txt", "data/software_
 
 # Function to scrape DevOps links
 scrape_links_and_store_data("links/devops_links.txt", "data/devops_data.json")
+
+# Function to scrape CyberSecurity links
+scrape_links_and_store_data("links/cybersecurity_engineer.txt", "data/cybersecurity_data.json")
+
+# Function to scrape Cloud Infra links
+scrape_links_and_store_data("links/cloud_infra_engineer.txt", "data/cloud_infra_data.json")
+
+# Function to scrape Data Science links
+scrape_links_and_store_data("links/data_science_links.txt", "data/data_science_data.json")
+
+# Function to scrape AI ML links
+scrape_links_and_store_data("links/al_ml_engineer.txt", "data/al_ml_data.json")
