@@ -11,7 +11,7 @@ class ResumeScore:
                  vectorizer_path="../data/cache/tfidf_vectorizer.pkl"):
 
         # -------------------------------
-        # Your predefined CS skills list
+        # Predefined CS skills list
         # -------------------------------
         self.skills_list = CS_Generic_List + CS_Comprehensive_List
         self.vectorizer_path = vectorizer_path
@@ -20,13 +20,13 @@ class ResumeScore:
         self.skills_set = set(skill.lower().strip() for skill in self.skills_list)
 
         # -------------------------------
-        # Step 1: Job Descriptions
+        # Job Descriptions Dataset
         # -------------------------------
         file_data = json.load(open(jd_json_path, "r"))
         self.job_descriptions = [file_data[i]["description"] for i in file_data if file_data[i] is not None]
 
         # -------------------------------
-        # Step 2: spaCy Tokenizer
+        # SpaCy Tokenizer
         # -------------------------------
         self.nlp = spacy.load("en_core_web_sm")
 
@@ -42,13 +42,13 @@ class ResumeScore:
         return set([token for token in tokens if token in self.skills_set]
                     + self.extract_relevant_skills_without_tokens(text))
 
+    # -------------------------------
+    # Train TF-IDF Vectorizer (on skill tokens only)
+    # -------------------------------
     def train(self):
         # Join filtered skills for TF-IDF
         preprocessed_jds = [" ".join(self.extract_relevant_skills(jd)) for jd in self.job_descriptions]
 
-        # -------------------------------
-        # Step 3: Train TF-IDF Vectorizer (on skill tokens only)
-        # -------------------------------
         vectorizer = TfidfVectorizer(vocabulary=sorted(self.skills_set))  # restrict to predefined skills
         X = vectorizer.fit_transform(preprocessed_jds)
 
@@ -62,9 +62,8 @@ class ResumeScore:
         print("✅ TF-IDF vectorizer trained with predefined skills only!\n")
 
     # -------------------------------
-    # Step 4: Score a Resume Against New JD
+    # Score a Resume Against New JD
     # -------------------------------
-
     def score_resume(self, new_jd, resume_text):
 
         # Load vectorizer
