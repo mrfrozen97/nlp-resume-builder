@@ -84,3 +84,5 @@ fabric.properties
 /resume-builder-ui/.pnp
 /resume-builder-ui/.pnp.js
 
+fastapi-backend/lib/__pycache__/*
+scripts/__pycache__/*

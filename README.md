@@ -21,3 +21,62 @@ This script scores a candidate's **resume** against a **job description (JD)** b
 🎯 Score: 0.52
 ✅ Matched Skills (with weights): {'python': 0.26, 'sql': 0.34}
 ❌ Missing Skills (with weights): {'kubernetes': 0.90, 'r': 0.0}
+```
+
+---
+# Resume Scoring FastAPI Backend
+
+This is a lightweight FastAPI service that scores a resume against a job description based on skill matching using TF-IDF weights.
+
+
+## 🛠 Setup Instructions
+
+1. **Clone the repository** (if not already):
+
+1. **Install required packages**:
+
+```bash
+pip install fastapi uvicorn scikit-learn pandas spacy joblib
+python -m spacy download en_core_web_sm
+```
+
+---
+
+## 🚀 Running the API Server
+
+Inside the `fastapi-backend` folder, run:
+
+```bash
+uvicorn main:app --reload
+```
+
+- Server will start at: `http://127.0.0.1:8000`
+- You can access automatic API docs at: `http://127.0.0.1:8000/docs`
+
+## 📨 Usage
+
+### Endpoint: `/score_resume`
+
+- **Method**: POST
+- **Request Body** (JSON):
+
+```json
+{
+  "resume_text": "<Paste your resume text here>",
+  "job_description": "<Paste your job description text here>"
+}
+```
+
+- **Response** (JSON):
+
+```json
+{
+  "normalized_score": 0.85,
+  "matched_skills": {
+    "java": 0.6,
+    "javascript": 0.25
+  },
+  "missing_skills": {}
+}
+```
+---
