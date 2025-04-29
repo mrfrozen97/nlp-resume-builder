@@ -40,7 +40,8 @@ export const TopNavBar = () => {
           {/* Add your page to the list below */}
           {[
             ["/resume-builder", "Builder"],
-            ["/resume-parser", "Parser"],
+            ["/resume-parser", "Upload"],
+            ["/resume-evaluation", "Evaluation"],
                       ].map(([href, text]) => (
             <Link
               key={text}
