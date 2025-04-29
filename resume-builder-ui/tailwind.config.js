@@ -3,8 +3,9 @@ module.exports = {
   content: ["./src/app/**/*.{ts,tsx,mdx}"],
   theme: {
     extend: {
-      backgroundImage: {
-        dot: "url('/assets/dots.svg')",
+      colors: {
+        primaryBg: '#4C4967',
+        accentPurple: '#9033CE',
       },
     },
   },

@@ -128,7 +128,7 @@ export const ResumeDropzone = ({
           <>
             <p
               className={cx(
-                "pt-3 text-gray-700",
+                "pt-3 text-gray-400",
                 !playgroundView && "text-lg font-semibold"
               )}
             >
@@ -159,8 +159,8 @@ export const ResumeDropzone = ({
             <>
               <label
                 className={cx(
-                  "within-outline-theme-purple cursor-pointer rounded-full px-6 pb-2.5 pt-2 font-semibold shadow-sm",
-                  playgroundView ? "border" : "bg-primary"
+                  "bg-accentPurple text-white cursor-pointer rounded-full px-6 pb-2.5 pt-2 font-semibold shadow-sm",
+                  playgroundView ? "border" : "bg-accentPurple"
                 )}
               >
                 Browse file
@@ -180,7 +180,7 @@ export const ResumeDropzone = ({
               {!playgroundView && (
                 <button
                   type="button"
-                  className="btn-primary"
+                  className="bg-accentPurple text-white cursor-pointer rounded-full px-6 pb-2.5 pt-2 font-semibold shadow-sm"
                   onClick={onImportClick}
                 >
                   Import and Continue <span aria-hidden="true">→</span>

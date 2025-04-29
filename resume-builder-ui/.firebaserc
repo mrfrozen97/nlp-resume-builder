@@ -1,0 +1,8 @@
+{
+  "projects": {
+    "default": "nlp-resume-builder",
+    "nlp": "nlp-resume-builder"
+  },
+  "targets": {},
+  "etags": {}
+}
