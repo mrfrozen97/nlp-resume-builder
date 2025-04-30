@@ -21,7 +21,8 @@ def run_ollama_cli(prompt):
         stdin=subprocess.PIPE,
         stdout=subprocess.PIPE,
         stderr=subprocess.PIPE,
-        text=True  # 👈 This is key
+        text=True,  # 👈 This is key
+        encoding='utf-8'
     )
 
     stdout, stderr = process.communicate(input=prompt)
