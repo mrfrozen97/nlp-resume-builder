@@ -47,6 +47,7 @@ index = 0
 
 for i in JOB_DES:
     result[i["id"]] = []
+    print(i["id"])
     for j in WORK_EX:
         print(index)
         curr_res = [j]
@@ -56,8 +57,8 @@ for i in JOB_DES:
         if output is not None:
             class_out = classify_output(output)
             curr_res.append(class_out)
+            curr_res.append(output)
             print(class_out)
             result[i["id"]].append(curr_res)
-            result[i["id"]].append(output)
             index+=1
     json.dump(result, open("result.json", "w"), indent=2)
