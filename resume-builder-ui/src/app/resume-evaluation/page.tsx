@@ -1,6 +1,6 @@
 "use client";
-
-import React, { useState } from "react";
+import { useResume } from "context/ResumeContext";
+import React, { useEffect, useState } from "react";
 
 const getColor = (score: number) => {
   if (score >= 80) return "text-green-500 stroke-green-400";
@@ -10,8 +10,8 @@ const getColor = (score: number) => {
 };
 
 const CircleProgress = ({ score }: { score: number }) => {
-  const radius = 55;
-  const stroke = 10;
+  const radius = 60;
+  const stroke = 12;
   const normalizedRadius = radius - stroke / 2;
   const circumference = normalizedRadius * 2 * Math.PI;
   const strokeDashoffset = circumference - (score / 100) * circumference;
@@ -45,8 +45,14 @@ export default function EvaluationPage() {
   const [overallScore, setOverallScore] = useState(74);
   const [skillScore, setSkillScore] = useState(65);
   const [impactScore, setImpactScore] = useState(83);
-  const cardWIdth = 80;
-  const cardHeight = 60;
+  const { resume } = useResume();
+  useEffect(() => {
+    if (resume) {
+      console.log(resume["projects"][0]["project"]);
+    }
+  }, [resume]);
+
+
 
   const [topMatchingSkills, setTopMatchingSkills] = useState([
     { skill: "Java", weight: 0.56 },

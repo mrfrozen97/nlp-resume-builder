@@ -1,5 +1,5 @@
 "use client";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useMemo } from "react";
 import { readPdf } from "lib/parse-resume-from-pdf/read-pdf";
 import type { TextItems } from "lib/parse-resume-from-pdf/types";
 import { groupTextItemsIntoLines } from "lib/parse-resume-from-pdf/group-text-items-into-lines";
@@ -10,6 +10,7 @@ import { cx } from "lib/cx";
 import { Heading, Link, Paragraph } from "components/documentation";
 import { ResumeTable } from "resume-parser/ResumeTable";
 import { FlexboxSpacer } from "components/FlexboxSpacer";
+import { useResume } from "context/ResumeContext";
 
 const RESUME_EXAMPLES = [
   {
@@ -38,9 +39,19 @@ const defaultFileUrl = RESUME_EXAMPLES[0]["fileUrl"];
 export default function ResumeParser() {
   const [fileUrl, setFileUrl] = useState(defaultFileUrl);
   const [textItems, setTextItems] = useState<TextItems>([]);
-  const lines = groupTextItemsIntoLines(textItems || []);
-  const sections = groupLinesIntoSections(lines);
-  const resume = extractResumeFromSections(sections);
+  const lines = useMemo(() => groupTextItemsIntoLines(textItems), [textItems]);
+  const sections = useMemo(() => groupLinesIntoSections(lines), [lines]);
+  const { resume, setResume } = useResume();
+  const parsedResume = useMemo(() => extractResumeFromSections(sections), [sections]);
+
+  useEffect(() => {
+    if (parsedResume) {
+      console.log(parsedResume);
+      setResume(parsedResume);
+    }
+  }, [parsedResume]);
+
+  //setResume(resume);
 
   useEffect(() => {
     async function test() {

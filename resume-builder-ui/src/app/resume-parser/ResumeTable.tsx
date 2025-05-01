@@ -39,6 +39,9 @@ const TableRow = ({
 );
 
 export const ResumeTable = ({ resume }: { resume: Resume }) => {
+  if(resume == null){
+    return (<></>);
+  }
   const educations =
     resume.educations.length === 0
       ? [deepClone(initialEducation)]
