@@ -92,3 +92,7 @@ scripts/__pycache__/*
 /scripts/fine_tuning/bert-match-model/*
 /scripts/fine_tuning/bert-match-model/*/*
 /scripts/fine_tuning/bert-match-model/logs/*
+
+# Rasa
+resume_bot/.rasa/
+resume_bot/models/
