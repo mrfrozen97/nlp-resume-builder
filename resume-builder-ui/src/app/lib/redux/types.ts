@@ -115,3 +115,19 @@ export const resumeToText = (resume: Resume): string => {
     customText
   ].join("\n\n");
 };
+
+
+export const workExToText = (resume: Resume): string => {
+  const { profile, workExperiences, educations, projects, skills, custom } = resume;
+
+
+  const workText = workExperiences.map((work, i) => `
+  Company: ${work.company}
+  Job Title: ${work.jobTitle}
+  Date: ${work.date}
+  Descriptions:
+  ${work.descriptions.join("\n  ")}
+  `).join("\n");
+
+  return workText;
+};

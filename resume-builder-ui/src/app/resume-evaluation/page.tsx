@@ -1,7 +1,8 @@
 "use client";
 import { useResume, useJobDescription } from "context/ResumeContext";
 import React, { useEffect, useState } from "react";
-import {resumeToText} from "lib/redux/types";
+import {resumeToText, workExToText} from "lib/redux/types";
+import FeedbackBox from "./FeedbackBox";
 
 const getColor = (score: number) => {
   if (score >= 80) return "text-green-500 stroke-green-400";
@@ -47,6 +48,7 @@ const CircleProgress = ({ score }: { score: number }) => {
 
 
 
+
 export default function EvaluationPage() {
   const [overallScore, setOverallScore] = useState(74);
   const [skillScore, setSkillScore] = useState(65);
@@ -65,6 +67,7 @@ export default function EvaluationPage() {
     "Leadership": 0.29 ,
 });
   const [result, setResult] = useState<any>(null);
+  const [workexFeedback, setWorkexFeedback] = useState<any>(null);
   const [loading, setLoading] = useState(false);
 
   const fetchScore = async (resumeText: string, jobDescription: string) => {
@@ -95,20 +98,44 @@ export default function EvaluationPage() {
     }
   };
 
-  useEffect(() => {
-    console.log("JD: ", resumeJD);
-  }, [resumeJD])
+  const fetchWorkexFeedBack = async (workexText: string, jobDescription: string) => {
+    setLoading(true);
+    try {
+      const response = await fetch('http://localhost:8000/workex_feedback', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          workex_text: workexText,
+          job_description: jobDescription,
+        }),
+      });
+
+      if (!response.ok) {
+        throw new Error(`Error: ${response.statusText}`);
+      }
+
+      const data = await response.json();
+      setWorkexFeedback(data);
+    } catch (error) {
+      console.error('Error scoring resume:', error);
+      setWorkexFeedback({  });
+    } finally {
+      setLoading(false);
+    }
+  };
+
 
   useEffect(() => {
     if (resume && resumeJD && resumeJD.length > 0) {
       //console.log(resumeToText(resume));
       fetchScore(resumeToText(resume), resumeJD);
-      console.log("Result: ", result);
+      fetchWorkexFeedBack(workExToText(resume), resumeJD);
     }
   }, [resume]);
 
   useEffect(()=>{
-    console.log("Result: ", result);
     if(result){
       if ("normalized_score" in result){
         setSkillScore(Math.round(result["normalized_score"]*100));
@@ -141,7 +168,7 @@ export default function EvaluationPage() {
 
   return (
     <div className="min-h-screen bg-[#37375b] p-10 text-white flex flex-col items-center space-y-10">
-      <h1 className="text-4xl font-bold">Detailed Analysis</h1>
+      <h1 className="text-4xl font-bold">Resume Analysis</h1>
 
       {/* Scores Section */}
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
@@ -189,6 +216,9 @@ export default function EvaluationPage() {
                 <span className="font-mono">{Math.round(score*1000)/10}</span>
               </div>
             ))}
+            {(topMatchingSkills && Object.keys(topMatchingSkills).length==0 && <div key={1} className="flex justify-between items-center bg-green-200/20 p-3 rounded-xl">
+                <span className="font-medium">{"None Found"}</span>
+              </div>)}
           </div>
         </div>
 
@@ -206,9 +236,16 @@ export default function EvaluationPage() {
                 <span className="font-mono">{Math.round(score*1000)/10}</span>
               </div>
             ))}
+            {(topMissingSkills && Object.keys(topMissingSkills).length==0 && <div key={1} className="flex justify-between items-center bg-yellow-200/20 p-3 rounded-xl">
+                <span className="font-medium">{"None Found"}</span>
+              </div>)}
           </div>
         </div>
+
       </div>
+        {/* Work Experience FeedBack */}
+        {workexFeedback && <FeedbackBox feedback={workexFeedback["feedback_text"]} skills={Object.keys(workexFeedback["matched_skills"])}/>}
+      
     </div>
   );
 }

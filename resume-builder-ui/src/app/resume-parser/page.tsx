@@ -48,7 +48,7 @@ export default function ResumeParser() {
 
   // Auto-update resumeJD when input is "filled"
   useEffect(() => {
-    if (input.length > 50) { // Customize this threshold
+    if (input && input.length > 50) { // Customize this threshold
       setResumeJD(input);
     }
   }, [input, setResumeJD]);

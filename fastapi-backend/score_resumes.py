@@ -10,24 +10,18 @@ class ResumeScore:
     def __init__(self, jd_json_path="../data/script/linkedin/data/software_intern_data.json",
                  vectorizer_path="../data/cache/tfidf_vectorizer.pkl"):
 
-        # -------------------------------
         # Predefined CS skills list
-        # -------------------------------
         self.skills_list = CS_Generic_List + CS_Comprehensive_List
         self.vectorizer_path = vectorizer_path
 
         # Normalize skill list
         self.skills_set = set(skill.lower().strip() for skill in self.skills_list)
 
-        # -------------------------------
         # Job Descriptions Dataset
-        # -------------------------------
         file_data = json.load(open(jd_json_path, "r"))
         self.job_descriptions = [file_data[i]["description"] for i in file_data if file_data[i] is not None]
 
-        # -------------------------------
         # SpaCy Tokenizer
-        # -------------------------------
         self.nlp = spacy.load("en_core_web_sm")
 
     def extract_relevant_skills_without_tokens(self, text):
@@ -42,9 +36,7 @@ class ResumeScore:
         return set([token for token in tokens if token in self.skills_set]
                     + self.extract_relevant_skills_without_tokens(text))
 
-    # -------------------------------
     # Train TF-IDF Vectorizer (on skill tokens only)
-    # -------------------------------
     def train(self):
         # Join filtered skills for TF-IDF
         preprocessed_jds = [" ".join(self.extract_relevant_skills(jd)) for jd in self.job_descriptions]
@@ -59,11 +51,9 @@ class ResumeScore:
         # Save vectorizer
         joblib.dump(vectorizer, self.vectorizer_path)
 
-        print("✅ TF-IDF vectorizer trained with predefined skills only!\n")
+        print("TF-IDF vectorizer trained with predefined skills only!\n")
 
-    # -------------------------------
-    # Score a Resume Against New JD
-    # -------------------------------
+    # Score a Resume or any Text Against New JD
     def score_resume(self, new_jd, resume_text):
 
         # Load vectorizer
@@ -88,7 +78,8 @@ class ResumeScore:
         # Sorted dictionary for matched skills
         sorted_matched = dict(
             sorted(
-                {skill: jd_weights[skill].values[0] for skill in present_skills}.items(),
+                {skill: jd_weights[skill].values[0] for skill in present_skills
+                 if jd_weights[skill].values[0] != 0}.items(),
                 key=lambda item: item[1],
                 reverse=True
             )
@@ -96,12 +87,16 @@ class ResumeScore:
 
         # Sorted dictionary for missing skills
         sorted_missing = dict(
-            sorted(
-                {skill: jd_weights[skill].values[0] for skill in missing_skills}.items(),
-                key=lambda item: item[1],
-                reverse=True
+                sorted(
+                    {
+                        skill: jd_weights[skill].values[0]
+                        for skill in missing_skills
+                        if jd_weights[skill].values[0] != 0  # Skip zero-value entries
+                    }.items(),
+                    key=lambda item: item[1],
+                    reverse=True
+                )
             )
-        )
 
         return normalized_score, sorted_matched, sorted_missing
 
@@ -117,6 +112,6 @@ if __name__ == "__main__":
         # Uncooment below line to train against new jds
         #obj.train()
         score, present_skills, missing_skills = obj.score_resume(new_jd, resume)
-        print(f"🎯 Score: {score:.2f}")
-        print(f"✅ Matched Skills: {present_skills}")
-        print(f"X Missing Skills: {missing_skills}")
+        print(f"Score: {score:.2f}")
+        print(f"Matched Skills: {present_skills}")
+        print(f"Missing Skills: {missing_skills}")
