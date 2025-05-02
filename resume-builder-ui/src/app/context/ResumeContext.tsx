@@ -6,7 +6,13 @@ interface ResumeContextType {
   setResume: (resume: any) => void;
 }
 
+interface JobDescriptionContextType {
+  resumeJD: any; // you can replace `any` with your Resume type if you have it
+  setResumeJD: (resumeJD: any) => void;
+}
+
 const ResumeContext = createContext<ResumeContextType | undefined>(undefined);
+const JobDescriptionContext = createContext<JobDescriptionContextType | undefined>(undefined);
 
 export function ResumeProvider({ children }: { children: ReactNode }) {
   const [resume, setResume] = useState<any>(null);
@@ -16,6 +22,24 @@ export function ResumeProvider({ children }: { children: ReactNode }) {
       {children}
     </ResumeContext.Provider>
   );
+}
+
+export function JobDescriptionProvider({ children }: { children: ReactNode }) {
+  const [resumeJD, setResumeJD] = useState<any>(null);
+
+  return (
+    <JobDescriptionContext.Provider value={{ resumeJD, setResumeJD }}>
+      {children}
+    </JobDescriptionContext.Provider>
+  );
+}
+
+export function useJobDescription() {
+  const context = useContext(JobDescriptionContext);
+  if (!context) {
+    throw new Error("useResume must be used inside a ResumeProvider");
+  }
+  return context;
 }
 
 export function useResume() {

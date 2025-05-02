@@ -1,5 +1,5 @@
 "use client";
-import { useResume } from "context/ResumeContext";
+import { useResume, useJobDescription } from "context/ResumeContext";
 import React, { useEffect, useState } from "react";
 import {resumeToText} from "lib/redux/types";
 
@@ -52,7 +52,7 @@ export default function EvaluationPage() {
   const [skillScore, setSkillScore] = useState(65);
   const [impactScore, setImpactScore] = useState(83);
   const { resume } = useResume();
-  const jd = "12 month contract to hire3 days onsite, 2 days remoteJOB DESCRIPTIONThe Junior Data Engineer will be an integral part of the product development cycle, responsible for creating features and developing tables and hydration procedures in a Databricks environment. This role requires a deep understanding of SQL, as it is the core language for interacting with data. They will be taking features to translate them into technical development by creating SQL tables, stored procedures, orchestration of these products. The engineer will also work with Python and PySpark to build and manage data transformations. Additionally, they will learn about the domain context to effectively build data transformations. Experience with Airflow for pipeline and orchestration, as well as AWS and streaming technologies like Kafka, is a plus.REQUIRED SKILLS AND EXPERIENCEExpertise in SQL, with the ability to write complex queries Experience with Databricks and Unity Catalog 1+ years of professional experience Pyspark and python\n";
+  const { resumeJD } = useJobDescription();
   const [topMatchingSkills, setTopMatchingSkills] = useState({
         "Java": 0.56,
         "Python": 0.63,
@@ -95,11 +95,14 @@ export default function EvaluationPage() {
     }
   };
 
+  useEffect(() => {
+    console.log("JD: ", resumeJD);
+  }, [resumeJD])
 
   useEffect(() => {
-    if (resume) {
+    if (resume && resumeJD && resumeJD.length > 0) {
       //console.log(resumeToText(resume));
-      fetchScore(resumeToText(resume), jd);
+      fetchScore(resumeToText(resume), resumeJD);
       console.log("Result: ", result);
     }
   }, [resume]);
