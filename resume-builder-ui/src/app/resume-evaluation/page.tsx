@@ -1,7 +1,7 @@
 "use client";
 import { useResume, useJobDescription } from "context/ResumeContext";
 import React, { useEffect, useState } from "react";
-import {resumeToText, workExToText} from "lib/redux/types";
+import {resumeToText, workExToText, projectToText} from "lib/redux/types";
 import FeedbackBox from "./FeedbackBox";
 
 const getColor = (score: number) => {

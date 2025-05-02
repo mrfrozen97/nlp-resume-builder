@@ -131,3 +131,18 @@ export const workExToText = (resume: Resume): string => {
 
   return workText;
 };
+
+
+export const projectToText = (resume: Resume): string => {
+  const { profile, workExperiences, educations, projects, skills, custom } = resume;
+
+  const projectText = projects.map((proj, i) => `
+  Project #${i + 1}
+  Name: ${proj.project}
+  Date: ${proj.date}
+  Descriptions:
+  ${proj.descriptions.join("\n  ")}
+  `).join("\n");
+
+  return projectText;
+};
