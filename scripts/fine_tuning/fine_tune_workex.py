@@ -15,7 +15,8 @@ BATCH_SIZE = 8
 with open("../label_dataset/formatted_workex.json", "r", encoding="utf-8") as f:
     data = json.load(f)["data"]
     for i in range(len(data)):
-        data[i]["label"] = 1 if data[i]["label"] == "postive" else 0
+        data[i]["label"] = 1 if data[i]["label"] == "positive" else 0
+        print(data[i]["label"])
 
 # ---------- Convert to HF Dataset ----------
 dataset = Dataset.from_list(data)
@@ -49,7 +50,8 @@ training_args = TrainingArguments(
     evaluation_strategy="epoch",
     save_strategy="epoch",
     logging_dir=f"{MODEL_DIR}/logs",
-    load_best_model_at_end=True
+    load_best_model_at_end=True,
+    learning_rate=0.0001
 )
 
 trainer = Trainer(
