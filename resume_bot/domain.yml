@@ -31,9 +31,10 @@ responses:
   - text: "Good luck with your job search!"
 
   utter_iamabot:
-  - text: "I am improving your resume."
+  - text: "I am Resume bot!"
 
   utter_tailor_for_job:
+  - text: "I am improving your resume."
 
 
 session_config:
