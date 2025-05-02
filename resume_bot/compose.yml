@@ -1,0 +1,9 @@
+services:
+  rasa:
+    image: rasa/rasa:3.6.21-full
+    ports:
+      - 5005:5005
+    volumes:
+      - ./:/app
+    command:
+      - run

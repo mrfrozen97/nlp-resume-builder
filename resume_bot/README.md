@@ -20,3 +20,8 @@ $ rasa shell
 ```bash
 $ rasa shell nlu
 ```
+
+## Deploy using Docker
+```bash
+$ docker compose up -d
+```
