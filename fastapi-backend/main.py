@@ -1,6 +1,9 @@
 from fastapi import FastAPI, HTTPException
+from fastapi.responses import JSONResponse
 from pydantic import BaseModel
 from score_resumes import ResumeScore  # Assuming the code you provided is saved as ResumeScore.py
+import requests
+import config
 
 app = FastAPI()
 
@@ -29,5 +32,19 @@ def score_resume_endpoint(request: ResumeRequest):
         )
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))
+
+
+@app.get("/bot/ping")
+def ping_bot():
+    return requests.get(config.BOT_PING_URL).ok
+
+
+@app.post("/bot/chat")
+def chat_with_bot(sender: str, message: str):
+    response = requests.post(config.BOT_CHAT_URL, json={"sender": sender, "message": message})
+    if response.ok:
+        return JSONResponse(response.json())
+    else:
+        raise HTTPException(status_code=500, detail="Could not reach BOT server.")
 
 # To run the server, use: uvicorn filename:app --reload

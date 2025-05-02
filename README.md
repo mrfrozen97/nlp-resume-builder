@@ -79,4 +79,35 @@ uvicorn main:app --reload
   "missing_skills": {}
 }
 ```
+
+### Endpoint: `/bot/ping`
+
+- **Method**: GET
+
+- **Response** (text):
+
+```json
+true
+```
+
+### Endpoint: `/bot/chat`
+
+- **Method**: POST
+- **Request Body** (JSON):
+
+```json
+{
+  "sender": "<User id>",
+  "message": "<Paste your prompt here>"
+}
+```
+
+- **Response** (JSON):
+
+```json
+{
+  "recipient_id": "<User id>",
+  "text": "<Bot response>"
+}
+```
 ---
