@@ -1,6 +1,7 @@
 "use client";
 import { useResume } from "context/ResumeContext";
 import React, { useEffect, useState } from "react";
+import {resumeToText} from "lib/redux/types";
 
 const getColor = (score: number) => {
   if (score >= 80) return "text-green-500 stroke-green-400";
@@ -8,6 +9,8 @@ const getColor = (score: number) => {
   if (score >= 40) return "text-orange-400 stroke-orange-400";
   return "text-red-500 stroke-red-400";
 };
+
+
 
 const CircleProgress = ({ score }: { score: number }) => {
   const radius = 60;
@@ -41,31 +44,97 @@ const CircleProgress = ({ score }: { score: number }) => {
   );
 };
 
+
+
+
 export default function EvaluationPage() {
   const [overallScore, setOverallScore] = useState(74);
   const [skillScore, setSkillScore] = useState(65);
   const [impactScore, setImpactScore] = useState(83);
   const { resume } = useResume();
+  const jd = "12 month contract to hire3 days onsite, 2 days remoteJOB DESCRIPTIONThe Junior Data Engineer will be an integral part of the product development cycle, responsible for creating features and developing tables and hydration procedures in a Databricks environment. This role requires a deep understanding of SQL, as it is the core language for interacting with data. They will be taking features to translate them into technical development by creating SQL tables, stored procedures, orchestration of these products. The engineer will also work with Python and PySpark to build and manage data transformations. Additionally, they will learn about the domain context to effectively build data transformations. Experience with Airflow for pipeline and orchestration, as well as AWS and streaming technologies like Kafka, is a plus.REQUIRED SKILLS AND EXPERIENCEExpertise in SQL, with the ability to write complex queries Experience with Databricks and Unity Catalog 1+ years of professional experience Pyspark and python\n";
+  const [topMatchingSkills, setTopMatchingSkills] = useState({
+        "Java": 0.56,
+        "Python": 0.63,
+        "Leadership": 0.29 ,
+    });
+
+  const [topMissingSkills, setTopMissingSkills] = useState({
+    "Java": 0.56,
+    "Python": 0.63,
+    "Leadership": 0.29 ,
+});
+  const [result, setResult] = useState<any>(null);
+  const [loading, setLoading] = useState(false);
+
+  const fetchScore = async (resumeText: string, jobDescription: string) => {
+    setLoading(true);
+    try {
+      const response = await fetch('http://localhost:8000/score_resume', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          resume_text: resumeText,
+          job_description: jobDescription,
+        }),
+      });
+
+      if (!response.ok) {
+        throw new Error(`Error: ${response.statusText}`);
+      }
+
+      const data = await response.json();
+      setResult(data);
+    } catch (error) {
+      console.error('Error scoring resume:', error);
+      setResult({  });
+    } finally {
+      setLoading(false);
+    }
+  };
+
+
   useEffect(() => {
     if (resume) {
-      console.log(resume["projects"][0]["project"]);
+      //console.log(resumeToText(resume));
+      fetchScore(resumeToText(resume), jd);
+      console.log("Result: ", result);
     }
   }, [resume]);
 
+  useEffect(()=>{
+    console.log("Result: ", result);
+    if(result){
+      if ("normalized_score" in result){
+        setSkillScore(Math.round(result["normalized_score"]*100));
+      }
+      if ("matched_skills" in result){
+        const sortedMatchedSkills = Object.entries(result["matched_skills"])
+              .sort(([, a], [, b]) => b - a)
+              .slice(0, 5)
+              .reduce((acc, [key, value]) => {
+                acc[key] = value;
+                return acc;
+              }, {} as typeof result["matched_skills"]);
+        setTopMatchingSkills(sortedMatchedSkills);
+      }
+      if ("missing_skills" in result){
+        const sortedMissingSkills = Object.entries(result["missing_skills"])
+            .sort(([, a], [, b]) => b - a)            // sort by descending value
+            .slice(0, 5)                              // take top 5 entries
+            .reduce((acc, [key, value]) => {
+              acc[key] = value;
+              return acc;
+            }, {} as typeof result["missing_skills"]);
 
 
-  const [topMatchingSkills, setTopMatchingSkills] = useState([
-    { skill: "Java", weight: 0.56 },
-    { skill: "Python", weight: 0.63 },
-    { skill: "Leadership", weight: 0.29 },
-  ]);
+        setTopMissingSkills(sortedMissingSkills);
+      }
+    }
+  }, [result]);
 
-  const [topMissingSkills, setTopMissingSkills] = useState([
-    { skill: "SQL", weight: 0.76 },
-    { skill: "Kubernetes", weight: 0.52 },
-    { skill: "Git", weight: 0.15 },
-    { skill: "MacOS", weight: 0.11 },
-  ]);
 
   return (
     <div className="min-h-screen bg-[#37375b] p-10 text-white flex flex-col items-center space-y-10">
@@ -107,10 +176,14 @@ export default function EvaluationPage() {
         <div className="bg-white/10 p-6 rounded-2xl">
           <h2 className="text-2xl font-semibold mb-4">Top Matching Skills</h2>
           <div className="space-y-3">
-            {topMatchingSkills.map((skill, idx) => (
+          <div key={-1} className="flex justify-between items-cente p-3 rounded-xl" style={{backgroundColor: "rgba(100, 140, 60, 1)",}}>
+                <span className="font-medium bold">{"Skills"}</span>
+                <span className="font-mono bold">{"Weight"}</span>
+          </div>
+            {Object.entries(topMatchingSkills).map(([skill, score], idx) => (
               <div key={idx} className="flex justify-between items-center bg-green-200/20 p-3 rounded-xl">
-                <span className="font-medium">{skill.skill}</span>
-                <span className="font-mono">{skill.weight}</span>
+                <span className="font-medium">{skill}</span>
+                <span className="font-mono">{Math.round(score*1000)/10}</span>
               </div>
             ))}
           </div>
@@ -120,10 +193,14 @@ export default function EvaluationPage() {
         <div className="bg-white/10 p-6 rounded-2xl">
           <h2 className="text-2xl font-semibold mb-4">Top Missing Skills</h2>
           <div className="space-y-3">
-            {topMissingSkills.map((skill, idx) => (
+          <div key={-1} className="flex justify-between items-cente p-3 rounded-xl" style={{backgroundColor: "rgba(140, 100, 60, 1)",}}>
+                <span className="font-medium">{"Skills"}</span>
+                <span className="font-mono">{"Weight"}</span>
+          </div>
+            {Object.entries(topMissingSkills).map(([skill, score], idx) => (
               <div key={idx} className="flex justify-between items-center bg-yellow-200/20 p-3 rounded-xl">
-                <span className="font-medium">{skill.skill}</span>
-                <span className="font-mono">{skill.weight}</span>
+                <span className="font-medium">{skill}</span>
+                <span className="font-mono">{Math.round(score*1000)/10}</span>
               </div>
             ))}
           </div>

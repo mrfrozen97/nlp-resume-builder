@@ -1,11 +1,21 @@
 from fastapi import FastAPI, HTTPException
 from pydantic import BaseModel
 from score_resumes import ResumeScore  # Assuming the code you provided is saved as ResumeScore.py
+from fastapi.middleware.cors import CORSMiddleware
 
 app = FastAPI()
 
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["http://localhost:3000"],  # Allow your frontend origin
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
+
 # Initialize ResumeScore once when the API starts
 resume_scorer = ResumeScore()
+
 
 class ResumeRequest(BaseModel):
     resume_text: str
