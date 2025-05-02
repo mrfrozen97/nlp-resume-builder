@@ -1,0 +1,41 @@
+version: "3.1"
+
+intents:
+  - greet
+  - goodbye
+  - add_experience
+  - change_project_section
+  - tailor_for_job
+  - ask_score
+  - affirm
+  - deny
+  - mood_great
+  - mood_unhappy
+  - bot_challenge
+
+responses:
+  utter_greet:
+  - text: "Hi there! How can I help improve your resume today?"
+
+  utter_cheer_up:
+  - text: "Here is something to cheer you up:"
+    image: "https://giphy.com/embed/Xx38XfhopDPgY"
+
+  utter_did_that_help:
+  - text: "Did that help you?"
+
+  utter_happy:
+  - text: "Great, carry on!"
+
+  utter_goodbye:
+  - text: "Good luck with your job search!"
+
+  utter_iamabot:
+  - text: "I am improving your resume."
+
+  utter_tailor_for_job:
+
+
+session_config:
+  session_expiration_time: 60
+  carry_over_slots_to_new_session: true
