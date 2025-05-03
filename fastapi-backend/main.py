@@ -8,7 +8,10 @@ from lib.projectex.score_projectex import ProjectEX
 import requests
 import config
 import spacy
+import logging
 
+log = logging.getLogger("uvicorn")
+log.setLevel(logging.DEBUG)
 app = FastAPI()
 
 app.add_middleware(
@@ -42,13 +45,13 @@ class ProjectRequest(BaseModel):
 
 class WorkExResponse(BaseModel):
     feedback_text: str
-    score: bool
+    score: float
     matched_skills: dict
     missing_skills: dict
 
 class ProjectResponse(BaseModel):
     feedback_text: str
-    score: bool
+    score: float
     matched_skills: dict
     missing_skills: dict
 
@@ -73,6 +76,7 @@ def get_workex_feedback_endpoint(request: WorkExRequest):
             missing_skills=missing_skills
         )
     except Exception as e:
+        print("Debug message: "+e, flush=True)
         raise HTTPException(status_code=500, detail=str(e))
     
 @app.post("/projectex_feedback", response_model=ProjectResponse)
