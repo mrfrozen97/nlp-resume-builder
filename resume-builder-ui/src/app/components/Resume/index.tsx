@@ -8,7 +8,6 @@ import {
 } from "components/Resume/ResumeControlBar";
 import { FlexboxSpacer } from "components/FlexboxSpacer";
 import { useAppSelector } from "lib/redux/hooks";
-import { selectResume } from "lib/redux/resumeSlice";
 import { selectSettings } from "lib/redux/settingsSlice";
 import { DEBUG_RESUME_PDF_FLAG } from "lib/constants";
 import {
@@ -16,11 +15,13 @@ import {
   useRegisterReactPDFHyphenationCallback,
 } from "components/fonts/hooks";
 import { NonEnglishFontsCSSLazyLoader } from "components/fonts/NonEnglishFontsCSSLoader";
+import { useResume } from "context/ResumeContext"; // <-- custom resume context
 
 export const Resume = () => {
   const [scale, setScale] = useState(0.8);
-  const resume = useAppSelector(selectResume);
-  const settings = useAppSelector(selectSettings);
+  const { resume } = useResume(); // <-- using context for resume
+  const settings = useAppSelector(selectSettings); // <-- still using Redux for settings
+
   const document = useMemo(
     () => <ResumePDF resume={resume} settings={settings} isPDF={true} />,
     [resume, settings]
@@ -32,10 +33,14 @@ export const Resume = () => {
   return (
     <>
       <NonEnglishFontsCSSLazyLoader />
-      <div className="relative flex justify-center md:justify-start">
-        <FlexboxSpacer maxWidth={50} className="hidden md:block" />
-        <div className="relative">
-          <section className="h-[calc(100vh-var(--top-nav-bar-height)-var(--resume-control-bar-height))] overflow-hidden md:p-[var(--resume-padding)]">
+      <div
+        className="relative flex justify-center md:justify-start"
+        style={{ width: "1200px" }} // Increased width here
+      >
+        <FlexboxSpacer maxWidth={500} className="hidden md:block" />
+        <div className="relative inline-block"
+    style={{ width: "1200px", textAlign: "center", paddingLeft: "10%" }}>
+          <section className="">
             <ResumeIframeCSR
               documentSize={settings.documentSize}
               scale={scale}
@@ -53,7 +58,7 @@ export const Resume = () => {
             setScale={setScale}
             documentSize={settings.documentSize}
             document={document}
-            fileName={resume.profile.name + " - Resume"}
+            fileName={(resume && resume.profile.name) + " - Resume"}
           />
         </div>
         <ResumeControlBarBorder />

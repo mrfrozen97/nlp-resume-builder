@@ -130,8 +130,10 @@ def chat_with_bot(chat_request: ChatRequest):
         if response.ok:
             return response.json()  # Forward the response from the bot server
         else:
+            print("Debug message: Could not reach", flush=True)
             raise HTTPException(status_code=500, detail="Could not reach BOT server.")
     except Exception as e:
+        print(f"Debug message: {e}", flush=True)
         raise HTTPException(status_code=500, detail=f"Error: {str(e)}")
 
 # To run the server, use: uvicorn filename:app --reload

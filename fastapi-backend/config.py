@@ -1,5 +1,5 @@
 BOT_PROTOCOL = 'http'
-BOT_HOST = '0.0.0.0'
+BOT_HOST = 'localhost'
 BOT_PORT = 5005
 BOT_PING_PATH = '/'
 BOT_CHAT_PATH = '/webhooks/rest/webhook'
