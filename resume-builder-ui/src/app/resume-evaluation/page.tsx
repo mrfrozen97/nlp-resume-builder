@@ -3,6 +3,7 @@ import { useResume, useJobDescription } from "context/ResumeContext";
 import React, { useEffect, useState } from "react";
 import {resumeToText, workExToText, projectToText} from "lib/redux/types";
 import FeedbackBox from "./FeedbackBox";
+import ChatBotWidget from "components/ChatbotWidget";
 
 const getColor = (score: number) => {
   if (score >= 80) return "text-green-500 stroke-green-400";
@@ -68,6 +69,7 @@ export default function EvaluationPage() {
 });
   const [result, setResult] = useState<any>(null);
   const [workexFeedback, setWorkexFeedback] = useState<any>(null);
+  const [projectFeedback, setProjectFeedback] = useState<any>(null);
   const [loading, setLoading] = useState(false);
 
   const fetchScore = async (resumeText: string, jobDescription: string) => {
@@ -126,15 +128,46 @@ export default function EvaluationPage() {
     }
   };
 
+  const fetchProjectFeedback = async (projectText: string, jobDescription: string) => {
+    setLoading(true);
+    try {
+      const response = await fetch('http://localhost:8000/projectex_feedback', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          project_text: projectText,
+          job_description: jobDescription,
+        }),
+      });
+  
+      if (!response.ok) {
+        throw new Error(`Error: ${response.statusText}`);
+      }
+  
+      const data = await response.json();
+      setProjectFeedback(data);
+    } catch (error) {
+      console.error('Error fetching project feedback:', error);
+      setProjectFeedback({});
+    } finally {
+      setLoading(false);
+    }
+  };
+  
+
 
   useEffect(() => {
     if (resume && resumeJD && resumeJD.length > 0) {
       //console.log(resumeToText(resume));
       fetchScore(resumeToText(resume), resumeJD);
       fetchWorkexFeedBack(workExToText(resume), resumeJD);
+      fetchProjectFeedback(projectToText(resume), resumeJD);
     }
   }, [resume]);
 
+  
   useEffect(()=>{
     if(result){
       if ("normalized_score" in result){
@@ -244,8 +277,17 @@ export default function EvaluationPage() {
 
       </div>
         {/* Work Experience FeedBack */}
-        {workexFeedback && <FeedbackBox feedback={workexFeedback["feedback_text"]} skills={Object.keys(workexFeedback["matched_skills"])}/>}
-      
+        {workexFeedback && <FeedbackBox feedback={workexFeedback["feedback_text"]} skills={Object.keys(workexFeedback["matched_skills"])} heading={"Work Experience Feedback"}/>}
+        {/* Project FeedBack */}
+        {projectFeedback && (
+          <FeedbackBox
+            feedback={projectFeedback["feedback_text"]}
+            skills={Object.keys(projectFeedback["matched_skills"])}
+            heading={"Project Feedback"}
+          />
+        )}
+
+      <ChatBotWidget />
     </div>
   );
 }

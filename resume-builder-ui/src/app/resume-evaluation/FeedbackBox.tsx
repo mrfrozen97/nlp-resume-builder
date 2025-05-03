@@ -18,9 +18,10 @@ const getColorClass = (index: number) => {
 type FeedbackBoxProps = {
   feedback: string;
   skills: string[];
+  heading: string;
 };
 
-const FeedbackBox: React.FC<FeedbackBoxProps> = ({ feedback, skills, heading="Work Experience Feedback" }) => {
+const FeedbackBox: React.FC<FeedbackBoxProps> = ({ feedback, skills, heading }) => {
   const [expanded, setExpanded] = useState(false);
   const MAX_LENGTH = 300;
 
