@@ -96,3 +96,4 @@ scripts/__pycache__/*
 # Rasa
 resume_bot/.rasa/
 resume_bot/models/
+resume_bot/rasa_env/
