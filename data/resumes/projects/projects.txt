@@ -1,0 +1,148 @@
+AI-Driven Police Dispatcher Plugin for VideoGameNameHere
+Designed and developed a C#/.NET plugin for VideoGameNameHere, enabling realistic police dispatch simulation powered by large language models (LLMS).
+Integrated OpenRouter API, ElevenLabs text-to-speech, and LemonFoxAI to facilitate dynamic two-way communication between players and an AI dispatcher, responding intelligently to in-game events and player inputs.
+Engineered interactive dispatch features, including callouts for service, traffic stop logging, priority incident handling (e.g., shots fired, domestic violence), and live database lookups of in-game license plates and NPC identities.
+Implemented authentic police radio communication protocols, enabling context-sensitive responses such as asking players if they are "clear for traffic" before disclosing sensitive information.
+Built a custom police scanner audio plugin using the JUCE Framework, applying realistic radio effects to AI-generated dispatcher voice lines for an immersive gameplay experience.
+
+Stock Market Price Prediction
+Developed a Random Forest Classifier to predict company stock closing prices based on real-time financial data, improving model accuracy through dynamic dataset preparation and feature engineering.
+Built an automated query system to pull historical stock data from Yahoo Finance's API and process it into clean, analysis-ready datasets.
+Designed a performance evaluation system, calculating key metrics such as accuracy, precision, and recall to assess model effectiveness.
+Created a user-friendly dashboard using Jupyter Notebook, enabling users to visualize predictions and monitor model performance interactively.
+Deployed the project to MyBinder, ensuring accessible, cloud-hosted use without local setup requirements.
+Utilized Python and data science libraries (scikit-learn, pandas, matplotlib) to facilitate full-cycle model development and deployment.
+
+CRYPTOCURRENCY FRAUD DETECTION
+Developed machine learning models using scikit-learn to detect fraudulent activity in cryptocurrency markets, achieving improved classification accuracy after addressing class imbalance issues.
+Scraped and processed publicly available data from multiple sources, building structured datasets and engineering relevant features for model training.
+Applied SMOTE algorithms to balance datasets and improve model robustness against minority class underrepresentation.
+Conducted market analysis and model evaluation, tuning hyperparameters to optimize fraud detection performance.
+Researched industry-specific fraud patterns, integrating domain knowledge into feature selection and model design to enhance real-world applicability.
+
+Rouge-Lite Video Game | Unity, C#
+Led a team of 5 in developing a dungeon-crawler video game, featuring dynamic enemy Al, character progression, and an in-game economy.
+Developed and Implemented core game mechanics, including character properties, saving/loading systems, screen transitions, and marketplace functionality.
+Awarded 3rd place out of 18 teams in a final demo competition.
+
+YouTube Clone | Rust, Actix Web, TypeScript, Next.js, Firestore, GCP, Docker | link | live
+Architected a full-stack YouTube clone using Next.js, Actix Web, TypeScript, and Google Cloud (Firestore, Cloud Storage, Pub/Sub, Cloud Run), enabling seamless video upload, transcoding, and playback, which improved user engagement and platform usability for end users.
+Engineered a scalable, event-driven video processing pipeline with Dockerized FEmpeg and Google Cloud Pub/Sub, reducing video processing latency and supporting high-concurrency uploads to enhance platform responsiveness.
+Leveraged Google Cloud Firestore and Storage for real-time metadata and media management, improving data consistency and delivering a smoother user experience.
+Orchestrated backend/frontend separation and automated scaling via Cloud Run, delivering a performant, maintainable codebase ready for production-scale traffic, which increased deployment reliability
+
+Face Cropping Tool | C++, OpenCV, GStreamer | link
+Utilized GStreamer to build a high-throughput pipeline for video-to-frame conversion, reducing manual preprocessing time and enabling extraction of over 10,000 JPEG-encoded frames in under 2 minutes, which accelerated dataset creation for ML workflows.
+Built a face localization and extraction module with OpenCV, accurately identifying and cropping faces from video frames at 75% precision, thereby enhancing the reliability of training datasets.
+Automated dataset organization by generating frame-wise folder structures for cropped faces, processing over 90 frames per second, which significantly accelerated ML data pipeline efficiency.
+
+Pacman Clone | C++, SFML | link
+Developed unique Ghost AI behaviors, intelligent pathfinding algorithms, and dynamic audio cues, elevating overall immersion and gameplay experience, which increased player engagement.
+Designed collision detection logic to ensure precise entity interaction handling, calibrating collision parameters and adjusting game state based on interactions, resulting in a smoother, bug-free player experience.
+Built a progressive scoring and level progression system with adaptive Ghost AI that scaled with player performance, increasing replay value and user retention.
+
+Loan.Ly
+Built Loan.ly, a real-time decentralized platform enabling short-term emergency micro- loans for underserved communities, as a fintech hackathon product.
+Integrated a social trust score system to assess borrower reliability, as well as a real-time dashboard and notifications system for seamless lender-borrower interactions.
+Awarded 2nd place out of 80+ teams for exceptional conceptualization, innovation, design, and technical execution.
+Tools and Technologies: Flutter, FastAPI, SupaBase authentication, PostgreSQL.
+
+Hospital Re-Admission Predictor
+Developed a machine learning model to predict hospital readmission risk for diabetic patients.
+Preprocessed and selected features from dataset to counter missing values, class imbalances and categorical variables.
+Evaluated various models and selected a Random Forest model for training, and tuned hyperparameters to reduce overfitting and optimize training.
+Achieved total model accuracy of 92% with a recall of 91%.
+
+PlantMD
+Created PlantMD, a mobile app that scans real-time images of a plant leaf and determines any diseases or infections.
+Designed a Flutter user interface, with a MobileNet model for scanning, and a python backend.
+Trained MobileNet model using a custom image dataset with over 20000+ images of healthy and diseased plant leaves, providing an accuracy of 95.4%.
+
+Ai Invoice parser | Azure Document Intelligence, Azure OpenAI GPT 4o API, Streamlit, Altair Chart github.com
+Designed and developed Invoice Analysis Dashboard using Azure Document Intelligence, GPT-4, Pandas, and Altair charts to extract data from invoices in PDF format.
+Designed an Anomaly Detection system to detect discrepancies in invoices compared to contracts using GPT-4, helping to save the client's expenditure.
+Implemented CI/CD pipeline using GitHub Actions, resulting in the automated deployment of code to Azure
+Led a team of 6 people to build and deliver the project in a timely manner.
+Achieved 5th position in the company's unit hackathon and won 5th prize among 190 teams.
+
+BashChat
+Collaborated within a team of four to develop a distributed chat and image-processing application in Rust
+Designed and implemented server-side functionality to encode images and send processed results back to clients
+Enabled seamless communication between clients and servers, as well as peer-to-peer client messaging, using UDP
+Leveraged the Tokio asynchronous runtime to build a high-performance, scalable communication layer
+
+LifeBridge
+Pioneered the development of a hospital blood donation platform, optimizing inventory and donor management
+Architected and implemented dynamic, interactive management pages for efficient administration
+Integrated QR code generators for seamless tracking, lifecycle management, and precise traceability of blood bags
+Leveraged React and Material-UI to deliver a highly intuitive and responsive front-end interface
+Engineered a robust back-end using Django, incorporating a SQL database with ORM management 
+
+Whatalytics Project
+Engineered a feature-rich python WhatsApp Chat Analysis Web Application
+Incorporated message counting, keyword frequency tracking, weekday-based heatmap visualization, wordcloud generation, messages distribution analysis, and downloadable dataframes for user convenience
+Leveraged Pandas, Matplotlib, Plotly, and WordCloud libraries for streamlined data processing and visualization
+
+Vision Impairment Assistance Web App
+Developed a React web app that helps the visually impaired to learn about their surroundings using YOLOV5 object detection as ground truth, voice interaction with Whisper, and image classification using OpenAl API
+Integrated phone haptic feedback to alert users upon object detection, improving accessibility and non-visual interaction for visually impaired users
+
+Executorch Library (Meta, PyTorch)
+Enhanced project portability by converting absolute Make paths to relative ones, simplifying build setup across environments, allowing for new contributors to run the React Native iOS demo previously broken
+
+GPT-2 Al User Imitation
+Fine-tuned a 124M-parameter GPT-2 model on a personal text message dataset to accurately replicate individual texting behaviors, enhancing personalized Al interactions
+
+End-to-End Lab Data Pipeline
+Constructed an automated data processing pipeline to ingest, clean, store, and visualize laboratory data, allowing the laboratory to qualify for business-critical certifications
+Automated data ingestion scripts to process and store laboratory instrument data from JSON and CSV files into a PostgreSQL database using Python and AWS (Lambda)
+Produced workflows to transfer processed data from PostgreSQL to Snowflake for further analysis
+Integrated Snowflake data into interactive Power BI and web-based dashboards, enabling scientists to analyze and visualize experiment results
+
+Automated Lab Compliance Monitor
+Built a Python-based system to analyze laboratory sample data in a MySQL database and detect expired samples for Good Manufacturing Practice (GMP) compliance
+Implemented an automated email notification system to alert of current and upcoming non-compliance, reducing compliance delays by 70%
+Leveraged Pandas and SQL to efficiently process, format, and report sample data, ensuring timely compliance actions
+
+Ranked 1v1 Discord Bot with ML-Assisted Betting- GitHub Link
+Designed and implemented a Discord bot in Python for ranking players in a 1v1 gaming environment with Elo-based ratings
+Developed a machine learning model to generate betting odds for virtual currency wagering
+Used an SQLite database for match recording, player stats, and leaderboards, allowing for turning data into insights to improve community engagement
+
+CLI Code Collaboration Project 
+Constructed a CLI code collaboration tool on a peer-to-peer network, enhancing team agility and code management efficiency by 40%.
+Implemented replication and fault tolerance mechanisms for high availability, using BadgerDB and distributed hash tables for data consistency.
+Facilitated peer discovery and dynamic load distribution, improving system resilience and operational scalability.
+
+Medical Clinic Scheduling Tool 
+Developed and deployed a full-stack scheduling app using Flask, React, and SQLite for appointment management, increasing clinic scheduling efficiency by 50%.
+Gathered requirements from clinic stakeholders and designed a UI to minimize the learning curve for non-technical users.
+Enhanced workflows and reduced appointment entry time by 40% through intuitive user interface improvements.
+
+Weather LLM - Al-Powered Natural Language Weather Application
+Leveraged Meta's Wit.Al to parse conversational weather queries from natural language input, supporting intuitive requests such as "weather in LA in F in miles" to deliver instant, targeted information while eliminating navigation friction by 30%.
+Engineered a responsive card-based user interface system for real-time conditions, multi-day forecasts, and astronomical data using JavaScript and React.js. paired with Al-powered intent recognition (95%+ keyword accuracy) to dynamically select data presentation formats for a clean, explicit user experience.
+Implemented robust CI/CD controls using GitHub and Vercel, facilitating rapid software iteration based on user feedback and Al model improvements.
+
+Dynamic Network Switch & Router Package Handling Project
+Engineered scalable network switch functions in Java featuring dynamic MAC address leaming, port mapping, and timeout mechanisms that efficiently processed thousands of network trames while maintaining optimal forwarding paths
+Designed and implemented router functions for robust IP packet validation, including checksum verification, TTL management, and packet filtering to ensure network integrity and minimize congestion.
+Developed a complete routing solution with longest prefix match algorithm for optimal path determination, integrated with ARP Cache resolution for correct Ethernet frame forwarding. Automatically tested the function using Python, Mininet, and POX over dozens of network topologies to ensure scalable stability
+
+Bank Loan Data Engineering & Analyties Project
+Built a Spark database with Python for over 4GB Wisconsin bank loan data using Docker containerization inside Google Cloud virtual Linux machine.
+Utilized Spark SQL and RDD to calculate local loan patterns. Optimized query approaches with 10x faster speed and 30% less storage allocation compared to traditional MapReduce databases.
+Leveraged PySpark Machine Learning to train a decision tree model over loan data, reaching near 80% accuracy on loan application approval results.
+
+
+
+
+
+
+
+
+
+
+
+
+
