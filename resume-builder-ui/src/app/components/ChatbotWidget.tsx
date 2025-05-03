@@ -18,7 +18,7 @@ export default function ChatBotWidget() {
 
   const sendMessage = async () => {
     if (!input.trim()) return;
-    
+  
     const userMessage = { sender: "user", text: input };
     setMessages((prev) => [...prev, userMessage]);
     setInput("");
@@ -35,18 +35,48 @@ export default function ChatBotWidget() {
   
       if (res.ok) {
         const data = await res.json();
-        const botResponse = { sender: "bot", text: data.response };
-        setMessages((prev) => [...prev, botResponse]);
+  
+        const botMessages = Array.isArray(data)
+          ? data
+          : data.response
+          ? [{ text: data.response }]
+          : [];
+  
+        if (botMessages.length > 0) {
+          const formattedMessages = botMessages.map((msg: any) => ({
+            sender: "bot",
+            text: msg.text || "Empty message from bot",
+          }));
+          setMessages((prev) => [...prev, ...formattedMessages]);
+        } else {
+          setMessages((prev) => [
+            ...prev,
+            { sender: "bot", text: "No response from bot." },
+          ]);
+        }
       } else {
-        setMessages((prev) => [...prev, { sender: "bot", text: "Sorry, I couldn't reach the server. Please try again later." }]);
+        setMessages((prev) => [
+          ...prev,
+          {
+            sender: "bot",
+            text: "Server error. Please try again later.",
+          },
+        ]);
       }
     } catch (error) {
       console.error(error);
-      setMessages((prev) => [...prev, { sender: "bot", text: "Network error. Please check your connection and try again." }]);
+      setMessages((prev) => [
+        ...prev,
+        {
+          sender: "bot",
+          text: "Network error. Please check your connection.",
+        },
+      ]);
     } finally {
       setIsLoading(false);
     }
   };
+  
 
   return (
     <div className="fixed bottom-6 right-6 z-50">
