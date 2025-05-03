@@ -24,6 +24,7 @@ export const Heading = ({
         HEADING_CLASSNAMES[level],
         className
       )}
+      style={{color:"rgb(200, 200, 200)"}}
     >
       {children}
     </Component>

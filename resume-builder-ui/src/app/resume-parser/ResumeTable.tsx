@@ -5,7 +5,7 @@ import { deepClone } from "lib/deep-clone";
 import { cx } from "lib/cx";
 
 const TableRowHeader = ({ children }: { children: React.ReactNode }) => (
-  <tr className="divide-x bg-gray-50">
+  <tr className="divide-x" style={{backgroundColor:"rgb(144, 51, 206)"}}>
     <th className="px-3 py-2 font-semibold" scope="colgroup" colSpan={2}>
       {children}
     </th>
@@ -21,7 +21,7 @@ const TableRow = ({
   value: string | string[];
   className?: string | false;
 }) => (
-  <tr className={cx("divide-x", className)}>
+  <tr className={cx("divide-x", className)} style={{backgroundColor:"rgba(164, 121, 216, 0.8)"}}>
     <th className="px-3 py-2 font-medium" scope="row">
       {label}
     </th>
@@ -39,6 +39,9 @@ const TableRow = ({
 );
 
 export const ResumeTable = ({ resume }: { resume: Resume }) => {
+  if(resume == null){
+    return (<></>);
+  }
   const educations =
     resume.educations.length === 0
       ? [deepClone(initialEducation)]
