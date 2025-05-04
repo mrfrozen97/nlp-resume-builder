@@ -100,6 +100,29 @@ export default function EvaluationPage() {
     }
   };
 
+  const fetchImpactScore = async (resumeText: string) => {
+    try {
+      const response = await fetch("http://localhost:8000/score_impact", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ resume_text: resumeText }),
+      });
+  
+      if (!response.ok) {
+        throw new Error(`Impact scoring failed: ${response.statusText}`);
+      }
+  
+      const data = await response.json();
+      const normalized = Math.min(100, Math.round(data.score * 100)); 
+      setImpactScore(normalized);
+    } catch (error) {
+      console.error("Error scoring action words:", error);
+      setImpactScore(0);
+    }
+  };
+
   const fetchWorkexFeedBack = async (workexText: string, jobDescription: string) => {
     setLoading(true);
     try {
@@ -164,6 +187,7 @@ export default function EvaluationPage() {
       fetchScore(resumeToText(resume), resumeJD);
       fetchWorkexFeedBack(workExToText(resume), resumeJD);
       fetchProjectFeedback(projectToText(resume), resumeJD);
+      fetchImpactScore(resumeToText(resume));
     }
   }, [resume]);
 

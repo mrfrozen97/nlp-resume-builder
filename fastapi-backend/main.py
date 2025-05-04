@@ -2,6 +2,7 @@ from fastapi import FastAPI, HTTPException
 from fastapi.responses import JSONResponse
 from pydantic import BaseModel
 from score_resumes import ResumeScore
+from score_impact import ImpactScore
 from fastapi.middleware.cors import CORSMiddleware
 from lib.workex.score_workex import WorkEX
 from lib.projectex.score_projectex import ProjectEX
@@ -24,6 +25,15 @@ app.add_middleware(
 
 # Initialize ResumeScore once when the API starts
 resume_scorer = ResumeScore()
+
+# Init scorer (global reuse for performance)
+impact_scorer = ImpactScore()
+
+class ActionWordRequest(BaseModel):
+    resume_text: str
+
+class ActionWordResponse(BaseModel):
+    score: float
 
 class ChatRequest(BaseModel):
     sender: str
@@ -112,6 +122,17 @@ def score_resume_endpoint(request: ResumeRequest):
         )
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))
+    
+@app.post("/score_impact", response_model=ActionWordResponse)
+def score_impact_endpoint(request: ActionWordRequest):
+    try:
+        score, _matched, _missing = impact_scorer.score_impact(request.resume_text)
+        return ActionWordResponse(score=float(score))
+    except Exception as e:
+        import traceback
+        traceback.print_exc()
+        raise HTTPException(status_code=500, detail=f"Error scoring impact: {str(e)}")
+
 
 
 @app.get("/bot/ping")
