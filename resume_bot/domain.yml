@@ -7,9 +7,9 @@ intents:
   - change_project_section
   - tailor_for_job
   - provide_job_title
-  - provide_job_description
+  # - provide_job_description
   - ask_job_title
-  - ask_job_description
+  # - ask_job_description
   - provide_company
   - ask_company
   - provide_skill
@@ -39,8 +39,8 @@ responses:
   utter_ask_job_title:
     - text: "What is the job title you're applying for?"
 
-  utter_ask_job_description:
-    - text: "What is the job description you're applying for?"
+  # utter_ask_job_description:
+  #   - text: "What is the job description you're applying for?"
 
   utter_ask_company:
     - text: "Which company is this job for?"
@@ -55,9 +55,9 @@ responses:
     - text: "You are applying for the {job_title} position." 
     - text: "The job title on file is {job_title}."
 
-  utter_answer_job_description:
-    - text: "You are applying for this job description:\n{job_description}" 
-    - text: "The job description on file is:\n{job_description}"
+  # utter_answer_job_description:
+  #   - text: "You are applying for this job description:\n{job_description}" 
+  #   - text: "The job description on file is:\n{job_description}"
 
   utter_answer_company:
     - text: "The job is targeted for {company}."
@@ -73,7 +73,7 @@ responses:
 
 entities:
 - job_title
-- job_description
+# - job_description
 - company
 - skill
 - score
@@ -85,12 +85,12 @@ slots:
     mappings:
     - type: from_entity
       entity: job_title
-  job_description:
-    type: text
-    influence_conversation: true
-    mappings:
-    - type: from_entity
-      entity: job_description
+  # job_description:
+  #   type: text
+  #   influence_conversation: true
+  #   mappings:
+  #   - type: from_entity
+  #     entity: job_description
   company:
     type: text
     influence_conversation: true
@@ -110,15 +110,15 @@ slots:
     - type: custom
       # run_action_every_turn: action_score
 
-forms:
-  resume_optimization_form:
-    required_slots:
-      - job_title
-      - company
+# forms:
+#   resume_optimization_form:
+#     required_slots:
+#       - job_title
+#       - company
 
 actions:
   - action_job_title
-  - action_job_description
+  # - action_job_description
   - action_company
   - action_skill
   - action_score

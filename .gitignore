@@ -95,4 +95,5 @@ __pycache__/
 resume_bot/.rasa/
 resume_bot/models/
 resume_bot/file/*.pdf
+resume_bot/file/*.txt
 resume_bot/rasa_env

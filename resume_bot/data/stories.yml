@@ -40,11 +40,11 @@ stories:
     entities:
     - job_title
   - action: action_job_title
-  - action: utter_ask_job_description
-  - intent: provide_job_description
-    entities:
-    - job_description
-  - action: action_job_description
+  # - action: utter_ask_job_description
+  # - intent: provide_job_description
+  #   entities:
+  #   - job_description
+  # - action: action_job_description
   - action: utter_ask_company
   - intent: provide_company
     entities:
@@ -63,10 +63,10 @@ stories:
     - intent: ask_job_title
     - action: utter_answer_job_title
 
-- story: User asks job description
-  steps:
-    - intent: ask_job_description
-    - action: utter_answer_job_description
+# - story: User asks job description
+#   steps:
+#     - intent: ask_job_description
+#     - action: utter_answer_job_description
 
 - story: User asks company
   steps:
