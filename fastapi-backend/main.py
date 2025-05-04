@@ -81,7 +81,18 @@ class ResumeResponse(BaseModel):
     matched_skills: dict
     missing_skills: dict
 
+class TextPayload(BaseModel):
+    text: str
 
+@app.post("/save-text")
+async def save_text(payload: TextPayload):
+    filename = f"jd.txt"
+    filepath = os.path.join(UPLOAD_DIR, filename)
+
+    with open(filepath, "w", encoding="utf-8") as f:
+        f.write(payload.text)
+
+    return {"message": "Text saved successfully", "filename": filename}
 
 
 @app.post("/upload_file")
