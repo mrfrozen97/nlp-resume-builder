@@ -43,7 +43,6 @@ class ActionScore(Action):
         #     dispatcher.utter_message(text=f"Your company is {company}")
 
         try:
-            breakpoint()
             response = requests.post(f"{config.API_SCORE_URL}", json={"resume_text": "string", "job_description": "string"})
             response.raise_for_status()
         except requests.exceptions.BaseHTTPError as e:
