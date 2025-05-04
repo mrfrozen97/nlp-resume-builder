@@ -95,11 +95,13 @@ nlu:
     - How well does my resume match this job?
     - Can you evaluate my resume?
     - What is my resume match score?
+    - Can you score my resmue?
+    - score my resmue
 
 - intent: add_experience
   examples: |
-    - Add my recent internship at Google
-    - Include my new job at Microsoft
+    - Add my recent internship at [Google](company)
+    - Include my new job at [Microsoft](company)
     - I want to add a new work experience
 
 - intent: change_project_section
@@ -110,6 +112,58 @@ nlu:
 
 - intent: tailor_for_job
   examples: |
-    - Customize my resume for a software engineer job
-    - Improve my resume for a backend role
-    - Optimize for a job at Amazon
+    - Customize my resume for a [software engineer](job_title) job
+    - Improve my resume for a [backend developer](job_title) role
+    - Optimize for a job at [Amazon](company)
+    - Optimize my resume
+    - Customize my resume for a job
+    - Tailor resume for a new job
+
+- intent: provide_job_title
+  examples: |
+    - It's a [Data Scientist](job_title) role
+    - I'm applying for [Software Engineer](job_title)
+    - The position is [Machine Learning Engineer](job_title)
+    - The job is [Frontend Developer](job_title)
+
+- intent: provide_company
+  examples: |
+    - The job is at [Amazon](company)
+    - Company is [Google](company)
+    - I want to apply to [Meta](company)
+    - It's for a job at [Netflix](company)
+
+- intent: provide_skill
+  examples: |
+    - Add [Python](skill)
+    - Include [machine learning](skill) and [TensorFlow](skill)
+    - Add [NLP](skill), [PyTorch](skill)
+    - I have experience with [Kubernetes](skill)
+    - I worked with [Docker](skill) and [Spark](skill)
+
+- intent: ask_job_title
+  examples: |
+    - What is the job title?
+    - Can you tell me what role I'm applying for?
+    - Which job title is selected for the resume?
+    - What's the position?
+    - Did I already give you the job title?
+    - Do you know the job role?
+
+- intent: ask_company
+  examples: |
+    - What company is this for?
+    - Can you remind me which company I chose?
+    - Did I tell you the company?
+    - Which company is the job at?
+    - What's the company name?
+    - Do you have the company info?
+
+- intent: ask_skill
+  examples: |
+    - What skills have I added?
+    - Can you list the skills included?
+    - Do you know what skills are on my resume?
+    - Which skills did I mention?
+    - Have I added any skills yet?
+    - Show me the skill list

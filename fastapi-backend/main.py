@@ -1,5 +1,5 @@
-from fastapi import FastAPI, HTTPException
-from fastapi.responses import JSONResponse
+from fastapi import FastAPI, HTTPException, status
+from fastapi.responses import JSONResponse, Response
 from pydantic import BaseModel
 from score_resumes import ResumeScore
 from fastapi.middleware.cors import CORSMiddleware
@@ -7,12 +7,12 @@ from lib.workex.score_workex import WorkEX
 from lib.projectex.score_projectex import ProjectEX
 import requests
 import config
-import spacy
 import logging
 
 log = logging.getLogger("uvicorn")
 log.setLevel(logging.DEBUG)
 app = FastAPI()
+app.state.data = {}
 
 app.add_middleware(
     CORSMiddleware,
@@ -24,6 +24,7 @@ app.add_middleware(
 
 # Initialize ResumeScore once when the API starts
 resume_scorer = ResumeScore()
+
 
 class ChatRequest(BaseModel):
     sender: str
@@ -39,9 +40,11 @@ class WorkExRequest(BaseModel):
     workex_text: str
     job_description: str
 
+
 class ProjectRequest(BaseModel):
     project_text: str
     job_description: str
+
 
 class WorkExResponse(BaseModel):
     feedback_text: str
@@ -49,11 +52,13 @@ class WorkExResponse(BaseModel):
     matched_skills: dict
     missing_skills: dict
 
+
 class ProjectResponse(BaseModel):
     feedback_text: str
     score: float
     matched_skills: dict
     missing_skills: dict
+
 
 class ResumeResponse(BaseModel):
     normalized_score: float
@@ -77,8 +82,9 @@ def get_workex_feedback_endpoint(request: WorkExRequest):
         )
     except Exception as e:
         print("Debug message: "+e, flush=True)
-        raise HTTPException(status_code=500, detail=str(e))
-    
+        raise HTTPException(status_code=500, detail=str(e)) from e
+
+
 @app.post("/projectex_feedback", response_model=ProjectResponse)
 def get_project_feedback_endpoint(request: ProjectRequest):
     try:
@@ -96,7 +102,7 @@ def get_project_feedback_endpoint(request: ProjectRequest):
             missing_skills=missing_skills
         )
     except Exception as e:
-        raise HTTPException(status_code=500, detail=str(e))
+        raise HTTPException(status_code=500, detail=str(e)) from e
 
 
 @app.post("/score_resume", response_model=ResumeResponse)
@@ -111,7 +117,7 @@ def score_resume_endpoint(request: ResumeRequest):
             missing_skills=missing_skills
         )
     except Exception as e:
-        raise HTTPException(status_code=500, detail=str(e))
+        raise HTTPException(status_code=500, detail=str(e)) from e
 
 
 @app.get("/bot/ping")
@@ -132,6 +138,26 @@ def chat_with_bot(chat_request: ChatRequest):
         else:
             raise HTTPException(status_code=500, detail="Could not reach BOT server.")
     except Exception as e:
-        raise HTTPException(status_code=500, detail=f"Error: {str(e)}")
+        raise HTTPException(status_code=500, detail=f"Error: {str(e)}") from e
+
+
+@app.get("/bot/webhooks/state")
+def bot_webhook_current_state(sender_id: str):
+    return app.state.data.get(sender_id, {})
+
+
+@app.post("/bot/webhooks/state")
+def bot_webhook_current_state_update(sender_id: str, state: dict):
+    app.state.data[sender_id] = state
+    return Response(status_code=status.HTTP_201_CREATED)
+
+
+@app.post("/bot/webhooks/job_title")
+def bot_webhook_job_title(sender: str, message: str):
+    response = requests.post(config.BOT_CHAT_URL, json={"sender": sender, "message": message})
+    if response.ok:
+        return JSONResponse(response.json())
+    else:
+        raise HTTPException(status_code=500, detail="Could not reach BOT server.")
 
 # To run the server, use: uvicorn filename:app --reload

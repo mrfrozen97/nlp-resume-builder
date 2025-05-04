@@ -2,6 +2,11 @@ version: "3.1"
 
 rules:
 
+- rule: Say hello anytime the user says hello
+  steps:
+  - intent: greet
+  - action: utter_greet
+
 - rule: Say goodbye anytime the user says goodbye
   steps:
   - intent: goodbye
@@ -11,3 +16,54 @@ rules:
   steps:
   - intent: bot_challenge
   - action: utter_iamabot
+
+- rule: User asks job title
+  steps:
+  - intent: ask_job_title
+  - action: utter_answer_job_title
+
+- rule: User asks company
+  steps:
+  - intent: ask_company
+  - action: utter_answer_company
+
+- rule: User asks skills
+  steps:
+  - intent: ask_skill
+  - action: utter_answer_skill
+
+# - rule: User provides job title
+#   steps:
+#   - intent: provide_job_title
+#     entities:
+#     - job_title
+#   - action: action_job_title
+#
+# - rule: User provides company
+#   steps:
+#   - intent: provide_company
+#     entities:
+#     - company
+#   - action: action_company
+#
+# - rule: User provides skills
+#   steps:
+#   - intent: provide_skill
+#     entities:
+#     - skill
+#   - action: action_skill
+# - rule: Activate resume optimization form
+#   steps:
+#   - intent: tailor_for_job
+#   - action: resume_optimization_form
+#   - active_loop: resume_optimization_form
+
+# - rule: Submit resume optimization form
+#   condition:
+#   - active_loop: resume_optimization_form
+#   steps:
+#   - action: resume_optimization_form
+#   - active_loop: null
+#   - action: utter_resume_ready
+#   - action: utter_ask_add_more
+

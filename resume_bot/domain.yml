@@ -6,6 +6,13 @@ intents:
   - add_experience
   - change_project_section
   - tailor_for_job
+  - provide_job_title
+  - ask_job_title
+  - provide_company
+  - ask_company
+  - provide_skill
+  - ask_skill
+  - change_projects
   - ask_score
   - affirm
   - deny
@@ -35,6 +42,68 @@ responses:
 
   utter_tailor_for_job:
   - text: "I am improving your resume."
+
+  utter_ask_job_title:
+    - text: "What is the job title you're applying for?"
+
+  utter_ask_company:
+    - text: "Which company is this job for?"
+
+  utter_resume_ready:
+    - text: "Great! I’ll optimize your resume for a {job_title} position at {company}."
+
+  utter_ask_add_more:
+    - text: "Would you like to add more skills or change project highlights?"
+
+  utter_answer_job_title:
+    - text: "You are applying for the {job_title} position." 
+    - text: "The job title on file is {job_title}."
+
+  utter_answer_company:
+    - text: "The job is targeted for {company}."
+    - text: "You mentioned {company} as the company."
+
+  utter_answer_skill:
+    - text: "These are the skills I have so far: {skill}."
+    - text: "You're currently listing these skills: {skill}."
+
+
+entities:
+- job_title
+- company
+- skill
+
+slots:
+  job_title:
+    type: text
+    influence_conversation: true
+    mappings:
+    - type: from_entity
+      entity: job_title
+  company:
+    type: text
+    influence_conversation: true
+    mappings:
+    - type: from_entity
+      entity: company
+  skill:
+    type: list
+    influence_conversation: true
+    mappings:
+    - type: from_entity
+      entity: skill
+
+forms:
+  resume_optimization_form:
+    required_slots:
+      - job_title
+      - company
+
+actions:
+  - action_job_title
+  - action_company
+  - action_skill
+  - action_score
 
 
 session_config:

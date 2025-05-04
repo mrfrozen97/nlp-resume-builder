@@ -2,36 +2,72 @@ version: "3.1"
 
 stories:
 
-- story: happy path
-  steps:
-  - intent: greet
-  - action: utter_greet
-  - intent: mood_great
-  - action: utter_happy
-
-- story: sad path 1
-  steps:
-  - intent: greet
-  - action: utter_greet
-  - intent: mood_unhappy
-  - action: utter_cheer_up
-  - action: utter_did_that_help
-  - intent: affirm
-  - action: utter_happy
-
-- story: sad path 2
-  steps:
-  - intent: greet
-  - action: utter_greet
-  - intent: mood_unhappy
-  - action: utter_cheer_up
-  - action: utter_did_that_help
-  - intent: deny
-  - action: utter_goodbye
+# - story: happy path
+#   steps:
+#   - intent: greet
+#   - action: utter_greet
+#   - intent: mood_great
+#   - action: utter_happy
+#
+# - story: sad path 1
+#   steps:
+#   - intent: greet
+#   - action: utter_greet
+#   - intent: mood_unhappy
+#   - action: utter_cheer_up
+#   - action: utter_did_that_help
+#   - intent: affirm
+#   - action: utter_happy
+#
+# - story: sad path 2
+#   steps:
+#   - intent: greet
+#   - action: utter_greet
+#   - intent: mood_unhappy
+#   - action: utter_cheer_up
+#   - action: utter_did_that_help
+#   - intent: deny
+#   - action: utter_goodbye
 
 - story: resume improvement
   steps:
+  - intent: greet
+  - action: utter_greet
   - intent: tailor_for_job
-  - action: utter_did_that_help
+  - action: utter_ask_job_title
+  - intent: provide_job_title
+    entities:
+    - job_title
+  - action: action_job_title
+  - action: utter_ask_company
+  - intent: provide_company
+    entities:
+    - company
+  - action: action_company
+  - action: utter_ask_add_more
   - intent: affirm
-  - action: utter_happy
+  - intent: provide_skill
+    entities:
+    - skill
+  - action: action_skill
+  - action: utter_resume_ready
+
+- story: User asks job title
+  steps:
+    - intent: ask_job_title
+    - action: utter_answer_job_title
+
+- story: User asks company
+  steps:
+    - intent: ask_company
+    - action: utter_answer_company
+
+- story: User asks skills
+  steps:
+    - intent: ask_skill
+    - action: utter_answer_skill
+
+- story: User asks for score
+  steps:
+  - intent: ask_score
+  - action: action_score
