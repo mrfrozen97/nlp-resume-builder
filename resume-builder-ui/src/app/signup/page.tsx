@@ -12,7 +12,7 @@ const SignUpPage = () => {
     e.preventDefault();
     try {
       await signUpWithEmail(email, password); 
-      router.push("/upload"); 
+      router.push("/resume-parser"); 
     } catch (error: any) {
       alert(error.message); 
     }

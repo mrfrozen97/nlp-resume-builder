@@ -12,7 +12,7 @@ const LoginPage = () => {
     e.preventDefault();
     try {
       await signInWithEmail(email, password);
-      router.push("/upload"); 
+      router.push("/resume-parser"); 
     } catch (error: any) {
       alert(error.message); 
     }

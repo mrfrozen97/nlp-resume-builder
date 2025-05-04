@@ -94,6 +94,10 @@ class ImpactScore:
 
         normalized_score = score / max_possible if max_possible else 0
 
+        quant_score = self.calculate_quantitative_impact(resume_text)
+
+        combined_score = (0.7 * normalized_score) + (0.3 * quant_score)
+
         sorted_matched = dict(
             sorted(
                 {verb: tfidf_weights[verb].values[0] for verb in matched if tfidf_weights[verb].values[0] != 0}.items(),
@@ -111,7 +115,7 @@ class ImpactScore:
             )
         )
 
-        return normalized_score, sorted_matched, sorted_missing
+        return combined_score, sorted_matched, sorted_missing
 
 if __name__ == "__main__":
     scorer = ImpactScore(
