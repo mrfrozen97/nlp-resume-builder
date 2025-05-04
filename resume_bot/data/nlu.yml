@@ -49,40 +49,6 @@ nlu:
     - no way
     - not really
 
-- intent: mood_great
-  examples: |
-    - perfect
-    - great
-    - amazing
-    - feeling like a king
-    - wonderful
-    - I am feeling very good
-    - I am great
-    - I am amazing
-    - I am going to save the world
-    - super stoked
-    - extremely good
-    - so so perfect
-    - so good
-    - so perfect
-
-- intent: mood_unhappy
-  examples: |
-    - my day was horrible
-    - I am sad
-    - I don't feel very well
-    - I am disappointed
-    - super sad
-    - I'm so sad
-    - sad
-    - very sad
-    - unhappy
-    - not good
-    - not very good
-    - extremly sad
-    - so saad
-    - so sad
-
 - intent: bot_challenge
   examples: |
     - are you a bot?
@@ -95,11 +61,13 @@ nlu:
     - How well does my resume match this job?
     - Can you evaluate my resume?
     - What is my resume match score?
+    - Can you score my resume?
+    - score my resume
 
 - intent: add_experience
   examples: |
-    - Add my recent internship at Google
-    - Include my new job at Microsoft
+    - Add my recent internship at [Google](company)
+    - Include my new job at [Microsoft](company)
     - I want to add a new work experience
 
 - intent: change_project_section
@@ -110,6 +78,84 @@ nlu:
 
 - intent: tailor_for_job
   examples: |
-    - Customize my resume for a software engineer job
-    - Improve my resume for a backend role
-    - Optimize for a job at Amazon
+    - Customize my resume for a [software engineer](job_title) job
+    - Improve my resume for a [backend developer](job_title) role
+    - Optimize for a job at [Amazon](company)
+    - Optimize my resume
+    - Customize my resume for a job
+    - Tailor resume for a new job
+
+- intent: provide_job_title
+  examples: |
+    - It's a [Data Scientist](job_title) role
+    - I'm applying for [Software Engineer](job_title)
+    - The position is [Machine Learning Engineer](job_title)
+    - The job is [Frontend Developer](job_title)
+
+- intent: provide_job_description
+  examples: |
+    - The job description says they want [someone with experience in Python and data analysis](job_description).
+    - Here's the job description: [looking for a backend developer with Django and PostgreSQL skills](job_description).
+    - The role requires [machine learning, cloud deployment, and communication skills](job_description).
+    - This is the description: [Responsible for developing APIs and maintaining cloud infrastructure](job_description).
+    - It says the candidate should know [C++, Git, and Agile development practices](job_description).
+    - The job posting mentions [working on NLP tasks and model deployment](job_description).
+    - They want someone who can [work with large datasets and knows Spark](job_description).
+    - This role includes [web scraping, REST API design, and production ML](job_description).
+    - They're hiring for a DevOps engineer to [automate CI/CD pipelines and manage AWS](job_description).
+    - Required skills include [SQL, business analytics, and strong reporting experience](job_description).
+
+- intent: provide_company
+  examples: |
+    - The job is at [Amazon](company)
+    - Company is [Google](company)
+    - I want to apply to [Meta](company)
+    - It's for a job at [Netflix](company)
+
+- intent: provide_skill
+  examples: |
+    - Add [Python](skill)
+    - Include [machine learning](skill) and [TensorFlow](skill)
+    - Add [NLP](skill), [PyTorch](skill)
+    - I have experience with [Kubernetes](skill)
+    - I worked with [Docker](skill) and [Spark](skill)
+
+- intent: ask_job_title
+  examples: |
+    - What is the job title?
+    - Can you tell me what role I'm applying for?
+    - Which job title is selected for the resume?
+    - What's the position?
+    - Did I already give you the job title?
+    - Do you know the job role?
+
+- intent: ask_job_description
+  examples: |
+    - What job description are you using?
+    - Can you show me the job description?
+    - Which job description am I tailoring for?
+    - Show the job posting details
+    - Do you have the job description?
+    - Tell me the description of the job
+    - I want to see the job listing again
+    - What are the job responsibilities?
+    - What position is this about again?
+    - Remind me of the job description
+
+- intent: ask_company
+  examples: |
+    - What company is this for?
+    - Can you remind me which company I chose?
+    - Did I tell you the company?
+    - Which company is the job at?
+    - What's the company name?
+    - Do you have the company info?
+
+- intent: ask_skill
+  examples: |
+    - What skills have I added?
+    - Can you list the skills included?
+    - Do you know what skills are on my resume?
+    - Which skills did I mention?
+    - Have I added any skills yet?
+    - Show me the skill list

@@ -10,6 +10,8 @@ export default function ChatBotWidget() {
   const [input, setInput] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const messagesEndRef = useRef<HTMLDivElement>(null);
+  const inputRef = useRef<HTMLInputElement>(null);
+
 
   // Auto-scroll to bottom of messages
   useEffect(() => {
@@ -74,6 +76,7 @@ export default function ChatBotWidget() {
       ]);
     } finally {
       setIsLoading(false);
+      inputRef.current?.focus();
     }
   };
   
@@ -143,6 +146,7 @@ export default function ChatBotWidget() {
             <input
               type="text"
               value={input}
+              ref={inputRef}
               onChange={(e) => setInput(e.target.value)}
               onKeyDown={(e) => e.key === "Enter" && sendMessage()}
               className="flex-1 px-4 py-3 text-base outline-none bg-gray-800 text-white rounded-l-lg border-r border-gray-700 focus:ring-2 focus:ring-indigo-500 placeholder-gray-400"
