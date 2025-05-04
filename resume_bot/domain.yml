@@ -15,7 +15,8 @@ intents:
   - provide_skill
   - ask_skill
   - change_projects
-  - ask_score
+  - ask_score_resume
+  - ask_score_impact
   - affirm
   - deny
   - bot_challenge
@@ -67,8 +68,11 @@ responses:
     - text: "These are the skills I have so far: {skill}."
     - text: "You're currently listing these skills: {skill}."
 
-  utter_answer_score:
-    - text: "Your current resume score is {score}"
+  utter_answer_score_resume:
+    - text: "Your current resume score is {score_resume}"
+
+  utter_answer_score_impact:
+    - text: "Your current score impact is {score_impact}"
 
 
 entities:
@@ -76,7 +80,8 @@ entities:
 # - job_description
 - company
 - skill
-- score
+- score_resume
+- score_impact
 
 slots:
   job_title:
@@ -103,12 +108,18 @@ slots:
     mappings:
     - type: from_entity
       entity: skill
-  score:
+  score_resume:
     type: float
     influence_conversation: true
     mappings:
     - type: custom
-      # run_action_every_turn: action_score
+      # run_action_every_turn: action_score_resume
+  score_impact:
+    type: float
+    influence_conversation: true
+    mappings:
+    - type: custom
+      # run_action_every_turn: action_score_impact
 
 # forms:
 #   resume_optimization_form:
@@ -121,7 +132,8 @@ actions:
   # - action_job_description
   - action_company
   - action_skill
-  - action_score
+  - action_score_resume
+  - action_score_impact
 
 
 session_config:

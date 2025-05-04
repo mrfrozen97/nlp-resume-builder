@@ -78,8 +78,14 @@ stories:
     - intent: ask_skill
     - action: utter_answer_skill
 
-- story: User asks for score
+- story: User asks for score resume
   steps:
-  - intent: ask_score
-  - action: action_score
-  - action: utter_answer_score
+  - intent: ask_score_resume
+  - action: action_score_resume
+  - action: utter_answer_score_resume
+
+- story: User asks for score impact
+  steps:
+  - intent: ask_score_impact
+  - action: action_score_impact
+  - action: utter_answer_score_impact
