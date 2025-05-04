@@ -96,7 +96,7 @@ class ImpactScore:
 
         quant_score = self.calculate_quantitative_impact(resume_text)
 
-        combined_score = (0.7 * normalized_score) + (0.3 * quant_score)
+        combined_score = (0.5 * normalized_score) + (0.5 * quant_score)
 
         sorted_matched = dict(
             sorted(
