@@ -1,0 +1,21 @@
+- Resume parsing
+- Entity/Keyword extraction
+- Pre-processing resume text
+- Building the initial NLP pipeline
+- Job posting description analysis
+- Job posting role analysis
+- Text similarity algorithms and matching strategies between job requirements and resume content
+- Metrics definition and modeling
+- Resume generation based on templates
+- Job posting Scraper
+- Dataset collection
+- Road map integration
+- Resume Scraper
+- Language model fine-tuning
+- Bullet point generation
+- Resume customization logic
+- Integration
+- UI/UX development
+- Chatbot interface
+- Model scoring
+- Testing
