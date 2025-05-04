@@ -36,23 +36,22 @@ const RESUME_EXAMPLES = [
 ];
 
 const defaultFileUrl = RESUME_EXAMPLES[0]["fileUrl"];
+
 export default function ResumeParser() {
   const [fileUrl, setFileUrl] = useState(defaultFileUrl);
   const [textItems, setTextItems] = useState<TextItems>([]);
   const lines = useMemo(() => groupTextItemsIntoLines(textItems), [textItems]);
   const sections = useMemo(() => groupLinesIntoSections(lines), [lines]);
   const { resume, setResume } = useResume();
-  const {resumeJD, setResumeJD} = useJobDescription();
+  const { resumeJD, setResumeJD } = useJobDescription();
   const parsedResume = useMemo(() => extractResumeFromSections(sections), [sections]);
   const [input, setInput] = useState(resumeJD);
 
-  // Auto-update resumeJD when input is "filled"
   useEffect(() => {
-    if (input && input.length > 50) { // Customize this threshold
+    if (input && input.length > 50) {
       setResumeJD(input);
     }
   }, [input, setResumeJD]);
-
 
   useEffect(() => {
     if (parsedResume) {
@@ -61,8 +60,6 @@ export default function ResumeParser() {
     }
   }, [parsedResume]);
 
-  //setResume(resume);
-
   useEffect(() => {
     async function test() {
       const textItems = await readPdf(fileUrl);
@@ -70,6 +67,27 @@ export default function ResumeParser() {
     }
     test();
   }, [fileUrl]);
+
+  const uploadFileToServer = async (file: File) => {
+    const formData = new FormData();
+    formData.append("file", file);
+
+    try {
+      const response = await fetch("http://localhost:8000/upload_file", {
+        method: "POST",
+        body: formData,
+      });
+
+      if (!response.ok) {
+        throw new Error("Upload failed");
+      }
+
+      const data = await response.json();
+      console.log("File uploaded to server:", data);
+    } catch (error) {
+      console.error("Error uploading file:", error);
+    }
+  };
 
   return (
     <main className="h-full w-full overflow-hidden">
@@ -90,13 +108,18 @@ export default function ResumeParser() {
                 onFileUrlChange={(fileUrl) =>
                   setFileUrl(fileUrl || defaultFileUrl)
                 }
+                onFileChange={(file) => {
+                  if (file) {
+                    uploadFileToServer(file);
+                  }
+                }}
                 playgroundView={true}
               />
             </div>
-            <div className="flex flex-col gap-2" style={{paddingTop:"20px"}}>
-            <Heading level={2} className="!mt-[1.2em]" >
-            Enter Job Description
-            </Heading>
+            <div className="flex flex-col gap-2" style={{ paddingTop: "20px" }}>
+              <Heading level={2} className="!mt-[1.2em]">
+                Enter Job Description
+              </Heading>
               <textarea
                 id="jd-input"
                 value={input}
@@ -105,7 +128,7 @@ export default function ResumeParser() {
                 className="border border-gray-300 p-2 rounded-md min-h-[100px]"
               />
             </div>
-            <Heading level={2} className="!mt-[1.2em]" >
+            <Heading level={2} className="!mt-[1.2em]">
               Resume Parsing Results
             </Heading>
             <ResumeTable resume={resume} />
