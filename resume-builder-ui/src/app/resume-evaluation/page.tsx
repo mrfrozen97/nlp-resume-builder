@@ -122,7 +122,7 @@ export default function EvaluationPage() {
       setImpactScore(0);
     }
   };
-
+  useEffect(()=>{setOverallScore(Math.round(impactScore+skillScore)/2);}, [impactScore, skillScore]);
   const fetchWorkexFeedBack = async (workexText: string, jobDescription: string) => {
     setLoading(true);
     try {
