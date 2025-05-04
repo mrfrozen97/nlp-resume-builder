@@ -49,40 +49,6 @@ nlu:
     - no way
     - not really
 
-- intent: mood_great
-  examples: |
-    - perfect
-    - great
-    - amazing
-    - feeling like a king
-    - wonderful
-    - I am feeling very good
-    - I am great
-    - I am amazing
-    - I am going to save the world
-    - super stoked
-    - extremely good
-    - so so perfect
-    - so good
-    - so perfect
-
-- intent: mood_unhappy
-  examples: |
-    - my day was horrible
-    - I am sad
-    - I don't feel very well
-    - I am disappointed
-    - super sad
-    - I'm so sad
-    - sad
-    - very sad
-    - unhappy
-    - not good
-    - not very good
-    - extremly sad
-    - so saad
-    - so sad
-
 - intent: bot_challenge
   examples: |
     - are you a bot?
@@ -95,8 +61,8 @@ nlu:
     - How well does my resume match this job?
     - Can you evaluate my resume?
     - What is my resume match score?
-    - Can you score my resmue?
-    - score my resmue
+    - Can you score my resume?
+    - score my resume
 
 - intent: add_experience
   examples: |
@@ -126,6 +92,19 @@ nlu:
     - The position is [Machine Learning Engineer](job_title)
     - The job is [Frontend Developer](job_title)
 
+- intent: provide_job_description
+  examples: |
+    - The job description says they want [someone with experience in Python and data analysis](job_description).
+    - Here's the job description: [looking for a backend developer with Django and PostgreSQL skills](job_description).
+    - The role requires [machine learning, cloud deployment, and communication skills](job_description).
+    - This is the description: [Responsible for developing APIs and maintaining cloud infrastructure](job_description).
+    - It says the candidate should know [C++, Git, and Agile development practices](job_description).
+    - The job posting mentions [working on NLP tasks and model deployment](job_description).
+    - They want someone who can [work with large datasets and knows Spark](job_description).
+    - This role includes [web scraping, REST API design, and production ML](job_description).
+    - They're hiring for a DevOps engineer to [automate CI/CD pipelines and manage AWS](job_description).
+    - Required skills include [SQL, business analytics, and strong reporting experience](job_description).
+
 - intent: provide_company
   examples: |
     - The job is at [Amazon](company)
@@ -149,6 +128,19 @@ nlu:
     - What's the position?
     - Did I already give you the job title?
     - Do you know the job role?
+
+- intent: ask_job_description
+  examples: |
+    - What job description are you using?
+    - Can you show me the job description?
+    - Which job description am I tailoring for?
+    - Show the job posting details
+    - Do you have the job description?
+    - Tell me the description of the job
+    - I want to see the job listing again
+    - What are the job responsibilities?
+    - What position is this about again?
+    - Remind me of the job description
 
 - intent: ask_company
   examples: |
