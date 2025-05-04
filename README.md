@@ -1,27 +1,13 @@
 # nlp-resume-builder
 
-# 📄 Resume Scorer
+---
+# Resume Scoring UI Setup
+## Instructions to Run
 
-This script scores a candidate's **resume** against a **job description (JD)** based on a predefined list of Computer Science skills using **TF-IDF weighting**.
-### Location: src/score_resumes.py
-## 🚀 What It Does
-
-- Uses NLP library spaCy to extract relevant skills from both JD and resume.
-- Trains and loads a TF-IDF model based on job descriptions to weigh skill importance.
-- Compares resume skills with JD-required skills.
-- Uses a predetermined vocabulary list of CS related job skills.
-- Calculates:
-  - 🎯 A **normalized match score** (0 to 1).
-  - ✅ A **list of matched skills** with weights (sorted by importance).
-  - ❌ A **list of missing but important skills** (also sorted).
-
-## 📦 Output Example
-
-```python
-🎯 Score: 0.52
-✅ Matched Skills (with weights): {'python': 0.26, 'sql': 0.34}
-❌ Missing Skills (with weights): {'kubernetes': 0.90, 'r': 0.0}
-```
+1. cd resume-builder-ui (move to the directory)
+2. Install the dependency `npm install`
+3. Start a development server `npm run dev`
+4. Open your browser and visit [http://localhost:3000](http://localhost:3000) to see OpenResume live
 
 ---
 # Resume Scoring FastAPI Backend
@@ -30,8 +16,6 @@ This is a lightweight FastAPI service that scores a resume against a job descrip
 
 
 ## 🛠 Setup Instructions
-
-1. **Clone the repository** (if not already):
 
 1. **Install required packages**:
 
@@ -111,3 +95,26 @@ true
 }
 ```
 ---
+
+# 📄 Resume Scorer
+
+This script scores a candidate's **resume** against a **job description (JD)** based on a predefined list of Computer Science skills using **TF-IDF weighting**.
+### Location: src/score_resumes.py
+## 🚀 What It Does
+
+- Uses NLP library spaCy to extract relevant skills from both JD and resume.
+- Trains and loads a TF-IDF model based on job descriptions to weigh skill importance.
+- Compares resume skills with JD-required skills.
+- Uses a predetermined vocabulary list of CS related job skills.
+- Calculates:
+  - 🎯 A **normalized match score** (0 to 1).
+  - ✅ A **list of matched skills** with weights (sorted by importance).
+  - ❌ A **list of missing but important skills** (also sorted).
+
+## 📦 Output Example
+
+```python
+🎯 Score: 0.52
+✅ Matched Skills (with weights): {'python': 0.26, 'sql': 0.34}
+❌ Missing Skills (with weights): {'kubernetes': 0.90, 'r': 0.0}
+```

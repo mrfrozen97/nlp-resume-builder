@@ -1,0 +1,192 @@
+Founder/Freelance SEO Analyst, -Remote
+April 2012-Present
+Executed technical and creative SEO tactics, leveraging tools like Google Analytics and SEMrush to help drive a 230% average increase in organic traffic.
+Interfaced with 30+ clients to understand their needs, creating tailored SEO strategies that delivered measurable ROI.
+Improved client backlink acquisition by 60% through strategic content marketing and targeted influencer outreach.
+
+Digital Marketing Manager, - Remote
+June 2017 March 2020
+Resolved duplicate content issues and acquired quality backlinks, increasing organic traffic by 140% year-over-year.
+Collaborated with doctors to enhance site authority, securing industry-standard certification and improving credibility.
+Streamlined content creation by developing detailed outlines, improving keyword targeting by 30% per month.
+
+SEO Analyst,
+April 2012-Dec 2018
+Recovered from the Google Penguin update by auditing backlinks and optimizing content, achieving top-10 Google
+rankings for all core keywords within 10 months.
+Increased content output by 50% by implementing editorial guidelines and streamlined processes.
+
+Software Developer, Lab
+Led development of a low-cost atmospheric and visual detection robot, reducing urban heat island effect monitoring costs by over 60% across 20+ deployment sites.
+Optimized YOLOv8 algorithm for low-quality images on embedded servers, improving processing speed by 30% and detection accuracy on video segmentation and activity patterns.
+Integrated IoT sensors to enable real-time data collection and processing, delivering urban heat mitigation insights to the government of Phoenix.
+
+Undergraduate Researcher,
+September 2023 - July 2024
+Developed molecular diffusion model that improved the accuracy of protein trajectory predictions, enhancing reliability of lab-grown molecule analysis by 20%.
+Optimized simulation algorithms on supercomputer GPU cluster, reducing computational time by 35%.
+Built parallelized cloud infrastructure to store and analyze millions of molecular simulations efficiently, cutting throughput time by 25% and accelerating the drug discovery pipeline.
+
+Data Science Intern,
+June 2022-August 2022
+Built decision tree machine learning models for MNC clients, leveraging company datasets to deliver insights, improving financial forecast accuracy for quarterly revenue reports by 20%.
+Created an automated chatbot using a pre-trained BERT model to minimize human error in false negative
+diagnoses, increasing customer retention.
+Revamped full-stack project, connecting SQL server and code base, managing distributed system architecture, optimizing data pipelines, and improving system uptime from 95% to 99%+.
+
+Software Engineer, Company, Remote (US)
+Improved user experience across the popular meal delivery service's Django web application
+Installed end-to-end A/B infrastructure and conducted experiments that boosted sign-up rate by ~15%
+Collaborated with Data team to integrate new projection model, increasing meal count forecast accuracy
+Modernized critical features by migrating template-rendered interactions to responsive React components
+Ensured smooth operations by updating internal tools with new subscription options and projection model
+Prepared rigorous manual and automated test procedures to ensure software reliability
+
+Support Engineer II, Company Name B (same parent company as A) - Remote
+May 2022-Dec 2022
+Implemented support functionality for two new services by writing documentation, building monitoring systems, creating alarms, and training engineers to reduce operational burden of developers
+Developed call leader scheduling tool and CI/CD pipeline using Python, AWS Lambda, and AWS CDK
+
+Cloud Support Engineer II, Company Name A - Portland, OR
+July 2021-May 2022
+Identified and resolved 17% regression in upload performance of global CDN-based service by analyzing packet captures of TCP connections and modifying server networking configuration
+Provided architectural analysis, scaling guidance, monitoring, and operational support of cloud services during
+preparation and execution of 15+ business critical events as part of AWS Infrastructure Event Management
+Configured WAF rules through analysis of network traffic and logs to mitigate DDoS attacks and secure infrastructure
+Analyzed service logs using Amazon Athena and SQL to reduce operational costs and identify performance gains
+Developed training labs using CloudFormation to automate reproduction of common troubleshooting scenarios
+
+Cloud Support Engineer I, Company Name A - Portland, OR
+Apr 2020-July 2021
+Led architectural review, performance tests, and data migration for successful launch of 80Mbps streaming service
+Developed and implemented a streamlined training program that reduced onboarding time for new cloud engineers by 50% across 4 locations in North America, increasing onboarding ROI by 100% and surpassing KPIs
+Actively mentored 10+ new engineers on supported AWS services and operational best practices, improving teamwide case handling efficiency and reducing time-to-resolution
+Facilitated training sessions on cloud infrastructure and services as lead trainer for over 100 new support engineers
+Sept 2019-Apr 2020
+
+Cloud Support Associate, Company Name A - Portland, OR
+Deployed and maintained cloud-based solutions using AWS services to troubleshoot and resolve customer issues
+Successfully resolved over 90% of customer issues within first contact, exceeding company's resolution goals by 20%
+and improving customer satisfaction by 10%
+Created and managed cloud IAM policies to ensure appropriate access control to customer data
+
+Software Engineer
+Overhauled an existing media processing pipeline to triple supported media types and reduce processing times by
+50% using AWS Lambda, S3 and TypeScript.
+Implemented automated change tracking for CI/CD pipelines which eliminated 2 days of manual work from release timelines and improved auditing for key stakeholders with Python, Buildkite and the GitHub & Atlassian APIs..
+Developed a generic job queuing system which reduced database load by 60%, connections by 25%, and queries by
+30% using Redis, Express.js, AWS ECS, MemoryDB and TypeScript.
+Led the design and development of a REDACTED feature with an uptake of 100,000 users upon release using Ruby
+on Rails, Sidekiq, PostgreSQL and TypeScript.
+Engineered an automated Wi-Fi statistics analysis pipeline which previously required an average of 3 hours of work
+with Java, TypeScript, PostgreSQL and React.
+Expanded automated test coverage of the primary backend service by 65% using RSpec for Ruby on Rails.
+
+Software Developer Co-op, Amplify - Remote
+Developed an email alert system in Python using AWS Lambda describing differences between config files and what is in production, using many heuristics to save developers time on investigating config issues
+Discovered redundant JavaScript and resources used in the login page, cutting the page's download size by half
+and achieving a perfect Google Lighthouse performance score
+Architected a service for password strength warnings, following NIST guidelines, leading to web mockups
+Improved frontend accessibility using knowledge from trainings, such as fixing color contrast and tab order
+Technologies: AWS, Terraform, Python, Java, JavaScript, FastAPI, PostgreSQL, FreeMarker, Django
+
+Software Development Co-op, Wegmans - Remote
+May 2021-Dec 2021
+Enabled multi-group selection, requiring much refactoring, but allowing many departments to use one device
+Developed web interfaces from mockup designs which were praised by other developers on my team
+Discovered and fixed a microservice bug relating to daylight-savings time, found after looking at future open
+hours, which would have allowed customers to order a meal at night
+Technologies: Microsoft Azure, C#, .NET Core, Blazor, Angular.JS, Bootstrap, MySQL, CosmoDB, Event Grid
+
+Software Engineer, Company - City, ST
+August 2022- Present
+Multinational technology company, curated customer data for training machine learning models in a team of 8
+Ensured data compliance with European Union GDPR, Japanese APPI, and Californian CCPA privacy laws by building services to guarantee deletion of sensitive voice and identification data
+Designed and implemented a system for redacting customer data from files greater than 5GB- comprising a daily throughput of over 60 terabytes across more than 10,000 files- via AWS CDK across 5 geographic regions.
+Led an emergency incident response after diagnosing a critical 5-year core service failure, by designing a custom AWS Glue script targeting over 12 billion files, comprising 130 petabytes, preventing millions of dollars in fines
+Developed a method for calculating the total size of every file managed by our service in S3 across more than 300 AWS accounts via Python script, in order to certify $3.26 million in savings from cost efficiency initiatives
+Implemented the expansion of my team's core product to two new regions- including re-instantiation of critical infrastructure via CDK- ensuring compliance with a customer team's internal regulations.
+Drove an initiative towards greater scope in test-driven development and clean code by compiling an operational.
+readiness review for the entirety of my team's core service- including an audit of all AWS Cloudwatch metrics, alarms, and continuous deployment pipeline integration tests
+Refactored 4 separate products to updated Java code bases- representing over $5 million in collective yearly cost
+
+Software Development Intern, Company - City, ST
+June 2021-August 2021
+North American rail transport company, worked in a team of 5 to update distributed cloud sales applications
+Reduced mishandled employee data in key areas by 50%, as measured by processing error rates, through the modification of SOQL queries connected through an Angular front end
+
+Data Engineer, SaaS Company - XYZ, Italy
+December 2021 - Present
+Built a multi-region data lake on AWS to provide near real-time data access at any scale. Data is served via Snowflake and ingested using Kafka and Debezium, with latency under 10 minutes
+Promoted the use of GitLab CI, Argo CD, and Terraform to standardize deployment processes and
+enhance the dependability of the data platform
+Designed an algorithm to simulate MySQL delete cascade rules starting from CDC events, ensuring consistent data replication and integrity
+Introduced the CRISP-DM framework to produce more reliable and documented data assets
+
+Data Engineer, Marketplace Company - XYZ, Italy
+May 2021 December 2021
+Reduced issue tickets by 60% by introducing the team to test-driven development, ensuring higher quality code and the effective processing of semi-structured data with Spark (Scala)
+Advocated the use of tools like Deequ, after noticing the lack of data quality checks in ETL pipelines, improving the reliability of the company data assets
+Guided data analysts and scientists in evaluating A/B test results from over 100 experiments, resulting in more informed business decisions
+Created a CI/CD process leveraging BentoML to standardize machine learning models deployment
+
+Senior Consultant, Consulting Company - XYZ, Italy
+February 2016 May 2021
+Created monitoring dashboards using Angular and D3.js for a manufacturing client, after ingesting and processing machinery data with ETL pipelines. Operators became able to proactively maintain equipment resulting in a 15% drop in machine failures
+Designed a recommendation system using PySpark ML to feed marketing campaigns through a reverse ETL pipeline, generating an additional £5 million in revenue
+Led a team of 8 to strengthen the foundation of the data platform of a retail customer using EMR, Spark, Delta Lake, and Airflow, reducing support tickets by 35%
+Mentored the data science team of the retail customer by organizing training courses on test-driven development and clean code principles, resulting in fewer bugs in the code and faster development
+Built trust by encouraging open feedback at a retail client, increasing collaboration between data engineering and data science teams
+Optimized legacy Spark ETL pipelines, reducing execution time by 50% and AWS expenses by 60%
+
+AI Engineer, Company City, ST
+Feb 2022-Oct 2023
+Developed a state-of-the-art BERT-based classification model by fine-tuning BERT for text classification on antisemitic texts, resulting in 94% accuracy, leading to a 16% increase in high-quality data collection.
+Created text generation LLM by fine-tuning T5 to mitigate campaigns, producing grammatically correct and logically structured mitigation texts, significantly enhancing campaign mitigation speed and effectiveness.
+Developed a text paraphrasing LLM by fine-tuning T5 to rephrase texts, enhancing the model's ability to blend in, making campaign mitigation texts substantially harder to detect using Transformers and PyTorch.
+Developed an efficient text analysis algorithm by text cleaning, s-BERT text embedding, k-means clustering, cosine similarity, reducing campaign detection time by 250% using RE, Sentence Transformers, scikit-learn.
+Integrated an external company's data collection to the extend data collection to additional social media by processing JSON, inserting them to Microsoft SQL Server database, resulting 17% increase in data collection.
+
+Research Assistant, University Name - City, ST
+Created, designed, architectured an imbalanced tree, each node contains a CNN for image classification and a group of labels it can predict or pass it to its child to handle a subgroup if it contained the predicted label.
+Preserved the CNN tree persistence using a preorder traversal file that the tree can use to rebuild itself.
+Resulting in 60% accuracy convolutional neural network tree for image classification on CIFAR-100 dataset using Python, OpenCV, Keras, scikit-learn, and NumPy.
+
+Software Engineer, Company Name - City, Germany
+May 2023-Present
+Developed and maintained backend services using C#, ASP.NET Core, Entity Framework and SQL Server, transforming monolithic applications into microservices to improve scalability, enhance maintainability, and streamline deployments.
+Implemented caching mechanisms in a high-traffic service, reducing redundant database queries and improving response times for frequently accessed data by 60%., leading to faster user interactions.
+Managed services for document processing, overseeing development, bug resolution, and performance optimizations to meet project requirements effectively for over 100K+ document transactions per day.
+Designed and executed unit and integration tests following Test-Driven Development (TDD) principles, improving test coverage and reducing critical bug reports by 20%.
+Actively participated in Agile development, engaging in sprint planning and code reviews to ensure timely and
+efficient feature delivery.
+
+Software Development Working Student, Company Name City, Germany
+Oct 2020-Sep 2022
+Developed and integrated an annotation tool to enable document table selection and data retrieval, reducing manual effort and accelerating document labeling by 80%.
+Refactored backend code to streamline the complete end-to-end document processing pipeline, reducing
+waiting times by over 30%.
+
+SENIOR MACHINE LEARNING ENGINEER
+March 2024-Present
+Enhanced model reliability by optimizing the feature extraction pipeline for an LLM, reducing failures in streaming data by 100%.
+Established a real-time data drift monitoring system, leading to proactive alerts and reduction in model degradation.
+
+Company Remote
+AI Engineer II
+Built a custom RAG service that uses semantic search and LLM search optimization to improve retrieval accuracy by >50% compared to alternative RAG services
+Led development of a content generation platform that allows users to quickly author and edit educational
+content with the assistance of LLMs and Agentic Al
+Provided technical leadership by leading educational presentations on Al and authoring internal blog posts
+Created CI/CD pipelines to automate the testing and deployment of APIs and standardize code style
+Designed and maintained production ML infrastructure using AWS CDK
+
+Al Engineer I
+Reduced cloud costs by 40% by rebuilding docker images to transition from AMD64 to ARM64 CPU
+architecture and redesigning infrastructure to improve efficiency
+Improved NLP inference model accuracy from 20% to 80% by applying transformations to training data
+Built and deployed ML models that assess fluency and soft skills by performing inference on written language and multimodal (audio, video) features
+Increased model transparency by creating docker images that enable inference models to serve realtime model
+explanations using SageMaker Clarify
+Built a model training pipeline that allows engineers to fine-tune models, perform hyperparameter optimization
+using WandB, and deploy NLP inference models to AWS SageMaker

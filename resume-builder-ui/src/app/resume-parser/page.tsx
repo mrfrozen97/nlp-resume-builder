@@ -1,5 +1,5 @@
 "use client";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useMemo } from "react";
 import { readPdf } from "lib/parse-resume-from-pdf/read-pdf";
 import type { TextItems } from "lib/parse-resume-from-pdf/types";
 import { groupTextItemsIntoLines } from "lib/parse-resume-from-pdf/group-text-items-into-lines";
@@ -10,6 +10,7 @@ import { cx } from "lib/cx";
 import { Heading, Link, Paragraph } from "components/documentation";
 import { ResumeTable } from "resume-parser/ResumeTable";
 import { FlexboxSpacer } from "components/FlexboxSpacer";
+import { useResume, useJobDescription } from "context/ResumeContext";
 
 const RESUME_EXAMPLES = [
   {
@@ -38,9 +39,29 @@ const defaultFileUrl = RESUME_EXAMPLES[0]["fileUrl"];
 export default function ResumeParser() {
   const [fileUrl, setFileUrl] = useState(defaultFileUrl);
   const [textItems, setTextItems] = useState<TextItems>([]);
-  const lines = groupTextItemsIntoLines(textItems || []);
-  const sections = groupLinesIntoSections(lines);
-  const resume = extractResumeFromSections(sections);
+  const lines = useMemo(() => groupTextItemsIntoLines(textItems), [textItems]);
+  const sections = useMemo(() => groupLinesIntoSections(lines), [lines]);
+  const { resume, setResume } = useResume();
+  const {resumeJD, setResumeJD} = useJobDescription();
+  const parsedResume = useMemo(() => extractResumeFromSections(sections), [sections]);
+  const [input, setInput] = useState(resumeJD);
+
+  // Auto-update resumeJD when input is "filled"
+  useEffect(() => {
+    if (input && input.length > 50) { // Customize this threshold
+      setResumeJD(input);
+    }
+  }, [input, setResumeJD]);
+
+
+  useEffect(() => {
+    if (parsedResume) {
+      console.log(parsedResume);
+      setResume(parsedResume);
+    }
+  }, [parsedResume]);
+
+  //setResume(resume);
 
   useEffect(() => {
     async function test() {
@@ -72,7 +93,19 @@ export default function ResumeParser() {
                 playgroundView={true}
               />
             </div>
-            <Heading level={2} className="!mt-[1.2em]">
+            <div className="flex flex-col gap-2" style={{paddingTop:"20px"}}>
+            <Heading level={2} className="!mt-[1.2em]" >
+            Enter Job Description
+            </Heading>
+              <textarea
+                id="jd-input"
+                value={input}
+                onChange={(e) => setInput(e.target.value)}
+                placeholder="Paste or type the job description here..."
+                className="border border-gray-300 p-2 rounded-md min-h-[100px]"
+              />
+            </div>
+            <Heading level={2} className="!mt-[1.2em]" >
               Resume Parsing Results
             </Heading>
             <ResumeTable resume={resume} />

@@ -1,6 +1,9 @@
 "use client";
-
-import React, { useState } from "react";
+import { useResume, useJobDescription } from "context/ResumeContext";
+import React, { useEffect, useState } from "react";
+import {resumeToText, workExToText, projectToText} from "lib/redux/types";
+import FeedbackBox from "./FeedbackBox";
+import ChatBotWidget from "components/ChatbotWidget";
 
 const getColor = (score: number) => {
   if (score >= 80) return "text-green-500 stroke-green-400";
@@ -9,9 +12,11 @@ const getColor = (score: number) => {
   return "text-red-500 stroke-red-400";
 };
 
+
+
 const CircleProgress = ({ score }: { score: number }) => {
-  const radius = 55;
-  const stroke = 10;
+  const radius = 60;
+  const stroke = 12;
   const normalizedRadius = radius - stroke / 2;
   const circumference = normalizedRadius * 2 * Math.PI;
   const strokeDashoffset = circumference - (score / 100) * circumference;
@@ -41,29 +46,162 @@ const CircleProgress = ({ score }: { score: number }) => {
   );
 };
 
+
+
+
+
 export default function EvaluationPage() {
   const [overallScore, setOverallScore] = useState(74);
   const [skillScore, setSkillScore] = useState(65);
   const [impactScore, setImpactScore] = useState(83);
-  const cardWIdth = 80;
-  const cardHeight = 60;
+  const { resume } = useResume();
+  const { resumeJD } = useJobDescription();
+  const [topMatchingSkills, setTopMatchingSkills] = useState({
+        "Java": 0.56,
+        "Python": 0.63,
+        "Leadership": 0.29 ,
+    });
 
-  const [topMatchingSkills, setTopMatchingSkills] = useState([
-    { skill: "Java", weight: 0.56 },
-    { skill: "Python", weight: 0.63 },
-    { skill: "Leadership", weight: 0.29 },
-  ]);
+  const [topMissingSkills, setTopMissingSkills] = useState({
+    "Java": 0.56,
+    "Python": 0.63,
+    "Leadership": 0.29 ,
+});
+  const [result, setResult] = useState<any>(null);
+  const [workexFeedback, setWorkexFeedback] = useState<any>(null);
+  const [projectFeedback, setProjectFeedback] = useState<any>(null);
+  const [loading, setLoading] = useState(false);
 
-  const [topMissingSkills, setTopMissingSkills] = useState([
-    { skill: "SQL", weight: 0.76 },
-    { skill: "Kubernetes", weight: 0.52 },
-    { skill: "Git", weight: 0.15 },
-    { skill: "MacOS", weight: 0.11 },
-  ]);
+  const fetchScore = async (resumeText: string, jobDescription: string) => {
+    setLoading(true);
+    try {
+      const response = await fetch('http://localhost:8000/score_resume', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          resume_text: resumeText,
+          job_description: jobDescription,
+        }),
+      });
+
+      if (!response.ok) {
+        throw new Error(`Error: ${response.statusText}`);
+      }
+
+      const data = await response.json();
+      setResult(data);
+    } catch (error) {
+      console.error('Error scoring resume:', error);
+      setResult({  });
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const fetchWorkexFeedBack = async (workexText: string, jobDescription: string) => {
+    setLoading(true);
+    try {
+      const response = await fetch('http://localhost:8000/workex_feedback', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          workex_text: workexText,
+          job_description: jobDescription,
+        }),
+      });
+
+      if (!response.ok) {
+        throw new Error(`Error: ${response.statusText}`);
+      }
+
+      const data = await response.json();
+      setWorkexFeedback(data);
+    } catch (error) {
+      console.error('Error scoring resume:', error);
+      setWorkexFeedback({  });
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const fetchProjectFeedback = async (projectText: string, jobDescription: string) => {
+    setLoading(true);
+    try {
+      const response = await fetch('http://localhost:8000/projectex_feedback', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          project_text: projectText,
+          job_description: jobDescription,
+        }),
+      });
+  
+      if (!response.ok) {
+        throw new Error(`Error: ${response.statusText}`);
+      }
+  
+      const data = await response.json();
+      setProjectFeedback(data);
+    } catch (error) {
+      console.error('Error fetching project feedback:', error);
+      setProjectFeedback({});
+    } finally {
+      setLoading(false);
+    }
+  };
+  
+
+
+  useEffect(() => {
+    if (resume && resumeJD && resumeJD.length > 0) {
+      //console.log(resumeToText(resume));
+      fetchScore(resumeToText(resume), resumeJD);
+      fetchWorkexFeedBack(workExToText(resume), resumeJD);
+      fetchProjectFeedback(projectToText(resume), resumeJD);
+    }
+  }, [resume]);
+
+  
+  useEffect(()=>{
+    if(result){
+      if ("normalized_score" in result){
+        setSkillScore(Math.round(result["normalized_score"]*100));
+      }
+      if ("matched_skills" in result){
+        const sortedMatchedSkills = Object.entries(result["matched_skills"])
+              .sort(([, a], [, b]) => b - a)
+              .slice(0, 5)
+              .reduce((acc, [key, value]) => {
+                acc[key] = value;
+                return acc;
+              }, {} as typeof result["matched_skills"]);
+        setTopMatchingSkills(sortedMatchedSkills);
+      }
+      if ("missing_skills" in result){
+        const sortedMissingSkills = Object.entries(result["missing_skills"])
+            .sort(([, a], [, b]) => b - a)            // sort by descending value
+            .slice(0, 5)                              // take top 5 entries
+            .reduce((acc, [key, value]) => {
+              acc[key] = value;
+              return acc;
+            }, {} as typeof result["missing_skills"]);
+
+
+        setTopMissingSkills(sortedMissingSkills);
+      }
+    }
+  }, [result]);
+
 
   return (
     <div className="min-h-screen bg-[#37375b] p-10 text-white flex flex-col items-center space-y-10">
-      <h1 className="text-4xl font-bold">Detailed Analysis</h1>
+      <h1 className="text-4xl font-bold">Resume Analysis</h1>
 
       {/* Scores Section */}
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
@@ -101,12 +239,19 @@ export default function EvaluationPage() {
         <div className="bg-white/10 p-6 rounded-2xl">
           <h2 className="text-2xl font-semibold mb-4">Top Matching Skills</h2>
           <div className="space-y-3">
-            {topMatchingSkills.map((skill, idx) => (
+          <div key={-1} className="flex justify-between items-cente p-3 rounded-xl" style={{backgroundColor: "rgba(100, 140, 60, 1)",}}>
+                <span className="font-medium bold">{"Skills"}</span>
+                <span className="font-mono bold">{"Weight"}</span>
+          </div>
+            {Object.entries(topMatchingSkills).map(([skill, score], idx) => (
               <div key={idx} className="flex justify-between items-center bg-green-200/20 p-3 rounded-xl">
-                <span className="font-medium">{skill.skill}</span>
-                <span className="font-mono">{skill.weight}</span>
+                <span className="font-medium">{skill}</span>
+                <span className="font-mono">{Math.round(score*1000)/10}</span>
               </div>
             ))}
+            {(topMatchingSkills && Object.keys(topMatchingSkills).length==0 && <div key={1} className="flex justify-between items-center bg-green-200/20 p-3 rounded-xl">
+                <span className="font-medium">{"None Found"}</span>
+              </div>)}
           </div>
         </div>
 
@@ -114,15 +259,35 @@ export default function EvaluationPage() {
         <div className="bg-white/10 p-6 rounded-2xl">
           <h2 className="text-2xl font-semibold mb-4">Top Missing Skills</h2>
           <div className="space-y-3">
-            {topMissingSkills.map((skill, idx) => (
+          <div key={-1} className="flex justify-between items-cente p-3 rounded-xl" style={{backgroundColor: "rgba(140, 100, 60, 1)",}}>
+                <span className="font-medium">{"Skills"}</span>
+                <span className="font-mono">{"Weight"}</span>
+          </div>
+            {Object.entries(topMissingSkills).map(([skill, score], idx) => (
               <div key={idx} className="flex justify-between items-center bg-yellow-200/20 p-3 rounded-xl">
-                <span className="font-medium">{skill.skill}</span>
-                <span className="font-mono">{skill.weight}</span>
+                <span className="font-medium">{skill}</span>
+                <span className="font-mono">{Math.round(score*1000)/10}</span>
               </div>
             ))}
+            {(topMissingSkills && Object.keys(topMissingSkills).length==0 && <div key={1} className="flex justify-between items-center bg-yellow-200/20 p-3 rounded-xl">
+                <span className="font-medium">{"None Found"}</span>
+              </div>)}
           </div>
         </div>
+
       </div>
+        {/* Work Experience FeedBack */}
+        {workexFeedback && <FeedbackBox feedback={workexFeedback["feedback_text"]} skills={Object.keys(workexFeedback["matched_skills"])} heading={"Work Experience Feedback"}/>}
+        {/* Project FeedBack */}
+        {projectFeedback && (
+          <FeedbackBox
+            feedback={projectFeedback["feedback_text"]}
+            skills={Object.keys(projectFeedback["matched_skills"])}
+            heading={"Project Feedback"}
+          />
+        )}
+
+      <ChatBotWidget />
     </div>
   );
 }
