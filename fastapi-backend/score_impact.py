@@ -2,6 +2,9 @@ import pandas as pd
 import spacy
 from sklearn.feature_extraction.text import TfidfVectorizer
 import joblib
+import spacy
+
+
 
 class ImpactScore:
     def __init__(self,
@@ -25,6 +28,28 @@ class ImpactScore:
     def _load_action_words(self, path):
         with open(path, 'r') as f:
             return [line.strip() for line in f if line.strip()]
+
+    def calculate_quantitative_impact(self, text):
+        nlp = spacy.load("en_core_web_sm")
+        IMPACT_ENTITY_LABELS = [
+                "CARDINAL",    # e.g., 20 million records
+                "PERCENT",     # e.g., 50% optimized
+                "MONEY",       # e.g., saved $10,000
+                "QUANTITY",    # e.g., 500 GB processed
+                "TIME",        # e.g., in 2 hours
+            ]
+        score = 0
+        used_types = set()
+        doc = nlp(text)
+        for ent in doc.ents:
+            if ent.label_ in IMPACT_ENTITY_LABELS:
+                score += 5
+                used_types.add(ent.label_)
+        # Bonus if multiple types are present
+        score += len(used_types) * 5
+        score = min((score/100), 1)
+
+        return score
 
     def extract_relevant_verbs(self, text):
         doc = self.nlp(text.lower())
@@ -98,6 +123,7 @@ if __name__ == "__main__":
     # Score a new resume
     new_resume = open("../optimized_resumes/data_engineer_resume.txt").read()
     score, matched, missing = scorer.score_impact(new_resume)
+    print(scorer.calculate_quantitative_impact(new_resume))
     print(f"Impact Score: {score:.2f}")
     print(f"Matched Verbs: {matched}")
     print(f"Missing Verbs: {missing}")
