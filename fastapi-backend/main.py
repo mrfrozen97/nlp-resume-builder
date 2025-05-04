@@ -9,6 +9,12 @@ import requests
 import config
 import spacy
 import logging
+from fastapi import UploadFile, File
+import os
+
+UPLOAD_DIR = "../resume_bot/file"
+os.makedirs(UPLOAD_DIR, exist_ok=True)
+
 
 log = logging.getLogger("uvicorn")
 log.setLevel(logging.DEBUG)
@@ -60,6 +66,20 @@ class ResumeResponse(BaseModel):
     matched_skills: dict
     missing_skills: dict
 
+
+
+
+@app.post("/upload_file")
+async def upload_file(file: UploadFile = File(...)):
+    if file.content_type != "application/pdf":
+        raise HTTPException(status_code=400, detail="Only PDF files are allowed.")
+
+    file_path = os.path.join(UPLOAD_DIR, "user1.pdf")
+
+    with open(file_path, "wb") as f:
+        contents = await file.read()
+        f.write(contents)
+    return {"filename": file.filename, "status": "Uploaded successfully"}
 
 @app.post("/workex_feedback", response_model=WorkExResponse)
 def get_workex_feedback_endpoint(request: WorkExRequest):
