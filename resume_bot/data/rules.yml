@@ -17,20 +17,25 @@ rules:
   - intent: bot_challenge
   - action: utter_iamabot
 
-- rule: User asks job title
-  steps:
-  - intent: ask_job_title
-  - action: utter_answer_job_title
-
-- rule: User asks company
-  steps:
-  - intent: ask_company
-  - action: utter_answer_company
-
-- rule: User asks skills
-  steps:
-  - intent: ask_skill
-  - action: utter_answer_skill
+# - rule: User asks job title
+#   steps:
+#   - intent: ask_job_title
+#   - action: utter_answer_job_title
+#
+# - rule: User asks job description
+#   steps:
+#   - intent: ask_job_description
+#   - action: utter_answer_job_description
+#
+# - rule: User asks company
+#   steps:
+#   - intent: ask_company
+#   - action: utter_answer_company
+#
+# - rule: User asks skills
+#   steps:
+#   - intent: ask_skill
+#   - action: utter_answer_skill
 
 # - rule: User provides job title
 #   steps:

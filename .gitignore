@@ -84,12 +84,7 @@ fabric.properties
 /resume-builder-ui/.pnp
 /resume-builder-ui/.pnp.js
 
-fastapi-backend/lib/__pycache__/*
-fastapi-backend/__pycache__/*
-resume_bot/__pycache__/*
-resume_bot/actions/__pycache__/*
-
-scripts/__pycache__/*
+__pycache__/
 
 .idea
 /scripts/fine_tuning/bert-match-model/*
@@ -101,4 +96,3 @@ resume_bot/.rasa/
 resume_bot/models/
 resume_bot/file/*.pdf
 resume_bot/rasa_env
-fastapi-backend/lib/workex/__pycache__/
