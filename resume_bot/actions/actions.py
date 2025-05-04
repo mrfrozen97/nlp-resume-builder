@@ -30,36 +30,67 @@ def update(dispatcher: CollectingDispatcher, tracker: Tracker,
         raise FileIOException(str(e)) from e
 
 
-class ActionScore(Action):
-
+class ActionScoreResume(Action):
     def name(self) -> Text:
-        return "action_score"
+        return "action_score_resume"
 
     def run(self, dispatcher: CollectingDispatcher,
             tracker: Tracker,
             domain: Dict[Text, Any]) -> List[Dict[Text, Any]]:
-        score = tracker.get_slot("score")
-        if not score:
-            dispatcher.utter_message(text="I am computing your score now...")
+        score_resume = tracker.get_slot("score_resume")
+        result = []
+        if not score_resume:
+            dispatcher.utter_message(text="I am computing your resume score now...")
             try:
                 reader = PdfReader(os.path.join(os.path.dirname(__file__), "../file/user1.pdf"))
                 text = "\n".join([page.extract_text() for page in reader.pages])
-                response = requests.post(f"{config.API_SCORE_URL}", json={"resume_text": text, "job_description": tracker.get_slot("job_description")})
+                with open(
+                    os.path.join(os.path.dirname(__file__), "../file/jd.txt")
+                ) as f:
+                    job_description = f.read()
+                response = requests.post(f"{config.API_SCORE_RESUME_URL}", json={"resume_text": text, "job_description": job_description})
                 response.raise_for_status()
-                score = response.json()["normalized_score"]
-                result = SlotSet("score", score)
-                tracker.slots["score"] = score
+                score_resume = response.json()["normalized_score"]
+                result.append(SlotSet("score_resume", score_resume))
+                tracker.slots["score_resume"] = score_resume
                 update(dispatcher, tracker, domain)
-                dispatcher.utter_message(text=f"Your score is {score}")
+                dispatcher.utter_message(text=f"Your resume score is {score_resume}")
             except requests.exceptions.BaseHTTPError as e:
                 raise FileIOException(str(e)) from e
         else:
-            dispatcher.utter_message(text=f"Your score is {score}")
-        return [result]
+            dispatcher.utter_message(text=f"Your resume score is {score_resume}")
+        return result
+
+
+class ActionScoreImpact(Action):
+    def name(self) -> Text:
+        return "action_score_impact"
+
+    def run(self, dispatcher: CollectingDispatcher,
+            tracker: Tracker,
+            domain: Dict[Text, Any]) -> List[Dict[Text, Any]]:
+        score_impact = tracker.get_slot("score_impact")
+        result = []
+        if not score_impact:
+            dispatcher.utter_message(text="I am computing your score impact now...")
+            try:
+                reader = PdfReader(os.path.join(os.path.dirname(__file__), "../file/user1.pdf"))
+                text = "\n".join([page.extract_text() for page in reader.pages])
+                response = requests.post(f"{config.API_SCORE_IMPACT_URL}", json={"resume_text": text})
+                response.raise_for_status()
+                score_impact = response.json()["score"]
+                result.append(SlotSet("score_impact", score_impact))
+                tracker.slots["score_impact"] = score_impact
+                update(dispatcher, tracker, domain)
+                dispatcher.utter_message(text=f"Your score impact is {score_impact}")
+            except requests.exceptions.BaseHTTPError as e:
+                raise FileIOException(str(e)) from e
+        else:
+            dispatcher.utter_message(text=f"Your score impact is {score_impact}")
+        return result
 
 
 class ActionCompany(Action):
-
     def name(self) -> Text:
         return "action_company"
 
@@ -78,7 +109,6 @@ class ActionCompany(Action):
 
 
 class ActionSkill(Action):
-
     def name(self) -> Text:
         return "action_skill"
 
@@ -97,7 +127,6 @@ class ActionSkill(Action):
 
 
 class ActionJobTitle(Action):
-
     def name(self) -> Text:
         return "action_job_title"
 
@@ -116,7 +145,6 @@ class ActionJobTitle(Action):
 
 
 class ActionJobDescription(Action):
-
     def name(self) -> Text:
         return "action_job_description"
 
