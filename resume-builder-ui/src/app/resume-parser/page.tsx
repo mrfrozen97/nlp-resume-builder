@@ -47,6 +47,23 @@ export default function ResumeParser() {
   const parsedResume = useMemo(() => extractResumeFromSections(sections), [sections]);
   const [input, setInput] = useState(resumeJD);
 
+  async function handleSaveText(text: string) {
+  
+    const response = await fetch("http://localhost:8000/save-text", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ text }),
+    });
+  
+    const data = await response.json();
+    console.log("Response:", data);
+  }
+
+  // useEffect(()=>{handleSaveText(resumeJD);}, [resumeJD])
+  
+
   useEffect(() => {
     if (input && input.length > 50) {
       setResumeJD(input);
@@ -126,6 +143,9 @@ export default function ResumeParser() {
                 onChange={(e) => setInput(e.target.value)}
                 placeholder="Paste or type the job description here..."
                 className="border border-gray-300 p-2 rounded-md min-h-[100px]"
+                onBlur={() => {
+                  handleSaveText(resumeJD);
+                }}
               />
             </div>
             <Heading level={2} className="!mt-[1.2em]">
