@@ -1,19 +1,19 @@
-import config
 import logging
 import os
+import requests
 import sys
 
-import requests
 from fastapi import FastAPI, HTTPException, status
-from fastapi.responses import JSONResponse, Response
-from fastapi.middleware.cors import CORSMiddleware
 from fastapi import UploadFile, File
+from fastapi.middleware.cors import CORSMiddleware
+from fastapi.responses import JSONResponse, Response
 from pydantic import BaseModel
-from pypdf import PdfReader
 
-from score_resumes import ResumeScore
-from lib.workex.score_workex import WorkEX
+import config
 from lib.projectex.score_projectex import ProjectEX
+from lib.workex.score_workex import WorkEX
+from score_impact import ImpactScore
+from score_resumes import ResumeScore
 
 SCRIPT_DIR = os.path.dirname(os.path.abspath(__file__))
 sys.path.append(os.path.dirname(SCRIPT_DIR))
@@ -44,6 +44,15 @@ app.add_middleware(
 # Initialize ResumeScore once when the API starts
 resume_scorer = ResumeScore()
 
+
+# Init scorer (global reuse for performance)
+impact_scorer = ImpactScore()
+
+class ActionWordRequest(BaseModel):
+    resume_text: str
+
+class ActionWordResponse(BaseModel):
+    score: float
 
 class ChatRequest(BaseModel):
     sender: str
@@ -119,6 +128,7 @@ async def optimize_resume_endpoint(request: ResumeRequest) -> str:
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e)) from e
 
+
 @app.post("/save-text")
 async def save_text(payload: TextPayload):
     filename = f"jd.txt"
@@ -141,6 +151,7 @@ async def upload_file(file: UploadFile = File(...)):
         contents = await file.read()
         f.write(contents)
     return {"filename": file.filename, "status": "Uploaded successfully"}
+
 
 @app.post("/workex_feedback", response_model=WorkExResponse)
 def get_workex_feedback_endpoint(request: WorkExRequest):
@@ -193,7 +204,18 @@ def score_resume_endpoint(request: ResumeRequest):
             missing_skills=missing_skills
         )
     except Exception as e:
-        raise HTTPException(status_code=500, detail=str(e)) from e
+      raise HTTPException(status_code=500, detail=str(e)) from e     
+
+
+@app.post("/score_impact", response_model=ActionWordResponse)
+def score_impact_endpoint(request: ActionWordRequest):
+    try:
+        score, _matched, _missing = impact_scorer.score_impact(request.resume_text)
+        return ActionWordResponse(score=float(score))
+    except Exception as e:
+        import traceback
+        traceback.print_exc()
+        raise HTTPException(status_code=500, detail=f"Error scoring impact: {str(e)}")
 
 
 @app.get("/bot/ping")

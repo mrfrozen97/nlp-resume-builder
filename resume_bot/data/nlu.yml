@@ -56,13 +56,28 @@ nlu:
     - am I talking to a bot?
     - am I talking to a human?
 
-- intent: ask_score
+- intent: ask_score_resume
   examples: |
     - How well does my resume match this job?
     - Can you evaluate my resume?
     - What is my resume match score?
     - Can you score my resume?
     - score my resume
+
+- intent: ask_score_impact
+  examples: |
+    - What is the score impact of adding this skill?
+    - Tell me the score impact of this project
+    - I want to know the score impact of my changes
+    - Can you show me the score impact?
+    - What's the score impact after this update?
+    - Score impact of removing Python?
+    - Show me the score impact of this edit
+    - How does this affect the score impact?
+    - Give me the score impact for this new experience
+    - What’s the score impact if I change the job title?
+    - Let’s check the score impact before saving
+    - Score impact after optimization?
 
 - intent: add_experience
   examples: |

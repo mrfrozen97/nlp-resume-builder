@@ -11,6 +11,8 @@ import { Heading, Link, Paragraph } from "components/documentation";
 import { ResumeTable } from "resume-parser/ResumeTable";
 import { FlexboxSpacer } from "components/FlexboxSpacer";
 import { useResume, useJobDescription } from "context/ResumeContext";
+import NextLink from "next/link";
+
 
 const RESUME_EXAMPLES = [
   {
@@ -152,9 +154,17 @@ export default function ResumeParser() {
               Resume Parsing Results
             </Heading>
             <ResumeTable resume={resume} />
+            <div className="mt-4 p-2 border-t border-gray-700 bg-gray-900 rounded-2xl text-center">
+              <NextLink href="/resume-evaluation">
+                <span className="text-indigo-400 hover:text-indigo-300 text-sm font-medium cursor-pointer">
+                  Go to Resume Evaluation →
+                </span>
+              </NextLink>
+            </div>
             <div className="pt-24" />
           </section>
         </div>
+
       </div>
     </main>
   );
