@@ -22,8 +22,8 @@ This README shows the minimal steps to install Ollama locally, pull the required
 Once Ollama is installed, pull the DeepSeek-R1 model you want to use (e.g. 1.5B parameters):
 
 ```bash
-ollama pull deepseekr1:1.5b
-ollama pull deepseekr1:7b
+ollama pull deepseek-r1:1.5b
+ollama pull deepseek-r1:7b
 ```
 
 > ### note:  at the starting of resume_optimizer_v2.py file please edit the model name if you want to change it. defailt is the deepseek-r1:7b model.

@@ -76,14 +76,20 @@ nlu:
     - Update the project part of my resume
     - Can you edit the projects?
 
-- intent: tailor_for_job
+- intent: optimize_resume
   examples: |
-    - Customize my resume for a [software engineer](job_title) job
-    - Improve my resume for a [backend developer](job_title) role
-    - Optimize for a job at [Amazon](company)
     - Optimize my resume
-    - Customize my resume for a job
-    - Tailor resume for a new job
+    - Can you improve my resume?
+    - Make my resume better
+    - I want you to enhance my resume
+    - Please revise my resume for this job
+    - Generate an optimized version of my resume
+    - Tailor my resume for the job
+    - Help me with resume optimization
+    - Update my resume using the job description
+    - Reformat and improve my resume
+    - Adjust my resume to match the job posting
+    - Optimize the resume for better match
 
 - intent: provide_job_title
   examples: |
