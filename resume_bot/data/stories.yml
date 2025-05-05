@@ -33,18 +33,12 @@ stories:
   steps:
   - intent: greet
   - action: utter_greet
-  - intent: tailor_for_job
   - action: utter_tailor_for_job
   - action: utter_ask_job_title
   - intent: provide_job_title
     entities:
     - job_title
   - action: action_job_title
-  # - action: utter_ask_job_description
-  # - intent: provide_job_description
-  #   entities:
-  #   - job_description
-  # - action: action_job_description
   - action: utter_ask_company
   - intent: provide_company
     entities:
@@ -63,11 +57,6 @@ stories:
     - intent: ask_job_title
     - action: utter_answer_job_title
 
-# - story: User asks job description
-#   steps:
-#     - intent: ask_job_description
-#     - action: utter_answer_job_description
-
 - story: User asks company
   steps:
     - intent: ask_company
@@ -80,9 +69,15 @@ stories:
 
 - story: User asks for score resume
   steps:
-  - intent: ask_score_resume
-  - action: action_score_resume
-  - action: utter_answer_score_resume
+  - intent: ask_score
+  - action: action_score
+  - action: utter_answer_score
+
+- story: User asks for resume optimization
+  steps:
+  - intent: optimize_resume
+  - action: action_optimize_resume
+  - action: utter_answer_optimize_resume
 
 - story: User asks for score impact
   steps:

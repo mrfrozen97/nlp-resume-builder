@@ -10,7 +10,7 @@ import os
 import json
 import time
 from pathlib import Path
-from resume_optimizer import ResumeOptimizer
+from scripts import ResumeOptimizer
 
 
 def main():

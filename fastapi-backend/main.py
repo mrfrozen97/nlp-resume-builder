@@ -1,16 +1,28 @@
+import logging
+import os
+import requests
+import sys
+
 from fastapi import FastAPI, HTTPException, status
+from fastapi import UploadFile, File
+from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import JSONResponse, Response
 from pydantic import BaseModel
-from score_resumes import ResumeScore
-from score_impact import ImpactScore
-from fastapi.middleware.cors import CORSMiddleware
-from lib.workex.score_workex import WorkEX
-from lib.projectex.score_projectex import ProjectEX
-import requests
+
 import config
-import logging
-from fastapi import UploadFile, File
-import os
+from lib.projectex.score_projectex import ProjectEX
+from lib.workex.score_workex import WorkEX
+from score_impact import ImpactScore
+from score_resumes import ResumeScore
+
+SCRIPT_DIR = os.path.dirname(os.path.abspath(__file__))
+sys.path.append(os.path.dirname(SCRIPT_DIR))
+from scripts.llm.resume_optimizer_v2 import (
+        load_extracted_data,
+        select_bucket,
+        retrieve_rag_hints,
+        optimize_resume,
+        )
 
 UPLOAD_DIR = "../resume_bot/file"
 os.makedirs(UPLOAD_DIR, exist_ok=True)
@@ -84,6 +96,39 @@ class ResumeResponse(BaseModel):
 class TextPayload(BaseModel):
     text: str
 
+
+@app.post("/optimize_resume")
+async def optimize_resume_endpoint(request: ResumeRequest) -> str:
+    try:
+        extracted = load_extracted_data("../extracted_data.json")
+
+        bucket = select_bucket(request.job_description, extracted)
+        if not bucket:
+            raise ValueError("Couldn't match job description to any category")
+        print(f"Selected bucket: {bucket}")
+
+        keywords = extracted[bucket].get("ats_keywords", [])
+        hints = retrieve_rag_hints(request.resume_text, request.job_description, keywords)
+
+        optimized = optimize_resume(request.resume_text, request.job_description, hints)
+
+        if "<think>" in optimized and "</think>" in optimized:
+            start_think = optimized.find("<think>")
+            end_think = optimized.find("</think>") + len("</think>")
+            optimized = optimized[:start_think] + optimized[end_think:]
+        parts = optimized.split('---')
+        if len(parts) >= 3:
+            optimized = parts[1].strip()
+        else:
+            raise ValueError("Could not find content between --- markers.")
+        with open('../optimized.txt', 'w', encoding='utf-8') as f:
+            f.write(optimized)
+        print(f"Optimized resume written to ../optimized.txt")
+        return optimized
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=str(e)) from e
+
+
 @app.post("/save-text")
 async def save_text(payload: TextPayload):
     filename = f"jd.txt"
@@ -106,6 +151,7 @@ async def upload_file(file: UploadFile = File(...)):
         contents = await file.read()
         f.write(contents)
     return {"filename": file.filename, "status": "Uploaded successfully"}
+
 
 @app.post("/workex_feedback", response_model=WorkExResponse)
 def get_workex_feedback_endpoint(request: WorkExRequest):
@@ -159,7 +205,8 @@ def score_resume_endpoint(request: ResumeRequest):
         )
     except Exception as e:
       raise HTTPException(status_code=500, detail=str(e)) from e     
-    
+
+
 @app.post("/score_impact", response_model=ActionWordResponse)
 def score_impact_endpoint(request: ActionWordRequest):
     try:
@@ -169,6 +216,7 @@ def score_impact_endpoint(request: ActionWordRequest):
         import traceback
         traceback.print_exc()
         raise HTTPException(status_code=500, detail=f"Error scoring impact: {str(e)}")
+
 
 @app.get("/bot/ping")
 def ping_bot():

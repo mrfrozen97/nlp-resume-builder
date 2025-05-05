@@ -34,9 +34,51 @@ def update(
         raise FileIOException(str(e)) from e
 
 
+class ActionOptimizeResume(Action):
+
+    def name(self) -> Text:
+        return "action_optimize_resume"
+
+    def run(
+        self,
+        dispatcher: CollectingDispatcher,
+        tracker: Tracker,
+        domain: Dict[Text, Any],
+    ) -> List[Dict[Text, Any]]:
+        result = []
+        optimized_resume = tracker.get_slot("optimized_resume")
+        if not optimized_resume:
+            dispatcher.utter_message(text="I am optimizing your resume now...")
+            try:
+                reader = PdfReader(
+                    os.path.join(os.path.dirname(__file__), "../file/user1.pdf")
+                )
+                text = "\n".join([page.extract_text() for page in reader.pages])
+                with open(
+                    os.path.join(os.path.dirname(__file__), "../file/jd.txt")
+                ) as f:
+                    job_description = f.read()
+                response = requests.post(
+                    f"{config.API_OPTIMIZE_URL}",
+                    json={"resume_text": text, "job_description": job_description},
+                )
+                response.raise_for_status()
+                optimized_resume = response.text
+                result.append(SlotSet("optimized_resume", optimized_resume))
+                tracker.slots["optimized_resume"] = optimized_resume
+                # update(dispatcher, tracker, domain)
+                dispatcher.utter_message(text=f"{optimized_resume}")
+            except requests.exceptions.BaseHTTPError as e:
+                raise FileIOException(str(e)) from e
+        else:
+            dispatcher.utter_message(text=f"{optimized_resume}")
+        return result
+
+
 class ActionScoreResume(Action):
     def name(self) -> Text:
         return "action_score_resume"
+
     def run(self, dispatcher: CollectingDispatcher,
             tracker: Tracker,
             domain: Dict[Text, Any]) -> List[Dict[Text, Any]]:

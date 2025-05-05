@@ -7,14 +7,13 @@ intents:
   - change_project_section
   - tailor_for_job
   - provide_job_title
-  # - provide_job_description
   - ask_job_title
-  # - ask_job_description
   - provide_company
   - ask_company
   - provide_skill
   - ask_skill
   - change_projects
+  - optimize_resume
   - ask_score_resume
   - ask_score_impact
   - affirm
@@ -40,9 +39,6 @@ responses:
   utter_ask_job_title:
     - text: "What is the job title you're applying for?"
 
-  # utter_ask_job_description:
-  #   - text: "What is the job description you're applying for?"
-
   utter_ask_company:
     - text: "Which company is this job for?"
 
@@ -55,10 +51,6 @@ responses:
   utter_answer_job_title:
     - text: "You are applying for the {job_title} position." 
     - text: "The job title on file is {job_title}."
-
-  # utter_answer_job_description:
-  #   - text: "You are applying for this job description:\n{job_description}" 
-  #   - text: "The job description on file is:\n{job_description}"
 
   utter_answer_company:
     - text: "The job is targeted for {company}."
@@ -74,12 +66,15 @@ responses:
   utter_answer_score_impact:
     - text: "Your current score impact is {score_impact}"
 
+  utter_answer_optimize_resume:
+    - text: "{optimized_resume}"
+
 
 entities:
 - job_title
-# - job_description
 - company
 - skill
+- optimized_resume
 - score_resume
 - score_impact
 
@@ -90,12 +85,6 @@ slots:
     mappings:
     - type: from_entity
       entity: job_title
-  # job_description:
-  #   type: text
-  #   influence_conversation: true
-  #   mappings:
-  #   - type: from_entity
-  #     entity: job_description
   company:
     type: text
     influence_conversation: true
@@ -113,13 +102,17 @@ slots:
     influence_conversation: true
     mappings:
     - type: custom
-      # run_action_every_turn: action_score_resume
+      # run_action_every_turn: action_score
+  optimized_resume:
+    type: text
+    influence_conversation: true
+    mappings:
+    - type: custom
   score_impact:
     type: float
     influence_conversation: true
     mappings:
     - type: custom
-      # run_action_every_turn: action_score_impact
 
 # forms:
 #   resume_optimization_form:
@@ -129,13 +122,13 @@ slots:
 
 actions:
   - action_job_title
-  # - action_job_description
   - action_company
   - action_skill
+  - action_optimize_resume
   - action_score_resume
   - action_score_impact
 
 
 session_config:
-  session_expiration_time: 60
+  session_expiration_time: 3600
   carry_over_slots_to_new_session: true
