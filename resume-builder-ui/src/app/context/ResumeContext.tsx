@@ -13,6 +13,7 @@ interface JobDescriptionContextType {
 
 const ResumeContext = createContext<ResumeContextType | undefined>(undefined);
 const JobDescriptionContext = createContext<JobDescriptionContextType | undefined>(undefined);
+const OptimizedResumeContext = createContext<JobDescriptionContextType | undefined>(undefined);
 
 export function ResumeProvider({ children }: { children: ReactNode }) {
   const [resume, setResume] = useState<any>(null);
@@ -34,8 +35,26 @@ export function JobDescriptionProvider({ children }: { children: ReactNode }) {
   );
 }
 
+export function OptimizedResumeProvider({ children }: { children: ReactNode }) {
+  const [resumeJD, setResumeJD] = useState<any>(null);
+
+  return (
+    <OptimizedResumeContext.Provider value={{ resumeJD, setResumeJD }}>
+      {children}
+    </OptimizedResumeContext.Provider>
+  );
+}
+
 export function useJobDescription() {
   const context = useContext(JobDescriptionContext);
+  if (!context) {
+    throw new Error("useResume must be used inside a ResumeProvider");
+  }
+  return context;
+}
+
+export function useOptimizedResume() {
+  const context = useContext(OptimizedResumeContext);
   if (!context) {
     throw new Error("useResume must be used inside a ResumeProvider");
   }
