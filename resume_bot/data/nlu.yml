@@ -112,6 +112,7 @@ nlu:
     - I'm applying for [Software Engineer](job_title)
     - The position is [Machine Learning Engineer](job_title)
     - The job is [Frontend Developer](job_title)
+    - Job title is [Artificial Intelligence Intern](job_title)
 
 # - intent: provide_job_description
 #   examples: |

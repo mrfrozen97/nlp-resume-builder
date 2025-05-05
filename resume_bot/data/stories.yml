@@ -69,9 +69,9 @@ stories:
 
 - story: User asks for score resume
   steps:
-  - intent: ask_score
-  - action: action_score
-  - action: utter_answer_score
+  - intent: ask_score_resume
+  - action: action_score_resume
+  - action: utter_answer_score_resume
 
 - story: User asks for resume optimization
   steps:
