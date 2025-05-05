@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useState, useRef, useEffect } from "react";
+import { useOptimizedResume } from "context/ResumeContext";
 
 export default function ChatBotWidget() {
   const [isOpen, setIsOpen] = useState(false);
@@ -11,6 +12,7 @@ export default function ChatBotWidget() {
   const [isLoading, setIsLoading] = useState(false);
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLInputElement>(null);
+  const { resumeJD, setResumeJD } = useOptimizedResume();
 
 
   // Auto-scroll to bottom of messages
@@ -25,6 +27,7 @@ export default function ChatBotWidget() {
     setMessages((prev) => [...prev, userMessage]);
     setInput("");
     setIsLoading(true);
+    
   
     try {
       const res = await fetch("http://localhost:8000/bot/chat", {
@@ -34,6 +37,7 @@ export default function ChatBotWidget() {
         },
         body: JSON.stringify({ sender: "user", message: input }),
       });
+      
   
       if (res.ok) {
         const data = await res.json();
@@ -43,13 +47,24 @@ export default function ChatBotWidget() {
           : data.response
           ? [{ text: data.response }]
           : [];
+          
   
         if (botMessages.length > 0) {
           const formattedMessages = botMessages.map((msg: any) => ({
             sender: "bot",
             text: msg.text || "Empty message from bot",
           }));
+          let text = "";
+          for(let i=0; i<formattedMessages.length; i++){
+            if(formattedMessages[i].text){
+              text+=formattedMessages[i].text;
+            }
+          }
+          setResumeJD( text);
+          console.log(text);
           setMessages((prev) => [...prev, ...formattedMessages]);
+          
+          
         } else {
           setMessages((prev) => [
             ...prev,
