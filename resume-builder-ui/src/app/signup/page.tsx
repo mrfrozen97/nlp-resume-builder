@@ -21,7 +21,7 @@ const SignUpPage = () => {
   const handleGoogleSignIn = async () => {
     try {
       await signInWithGoogle();
-      router.push("/upload"); 
+      router.push("/resume-parser"); 
     } catch (error: any) {
       alert(error.message);
     }
