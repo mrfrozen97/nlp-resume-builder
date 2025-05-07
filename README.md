@@ -1,6 +1,12 @@
 # nlp-resume-builder
 
 ---
+
+## 📽️ Demo Video
+
+▶️ [Watch the YouTube demo (4 min)](https://www.youtube.com/watch?v=w94-_X9GRA8)
+
+---
 # Resume Scoring UI Setup
 ## Instructions to Run
 
